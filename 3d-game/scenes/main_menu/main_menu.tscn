@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://difp4k65mfha3"]
+
+[ext_resource type="Script" uid="uid://cdcn2onusfbbk" path="res://scripts/main_menu/main_menu.gd" id="1_fsom3"]
+[ext_resource type="Texture2D" uid="uid://bussbu7w5apdg" path="res://assets/menu/title.png" id="2_uqeha"]
+[ext_resource type="Texture2D" uid="uid://k0yew627und3" path="res://assets/menu/stopwatch.png" id="3_wem23"]
+[ext_resource type="Texture2D" uid="uid://dru5wtthrhtju" path="res://assets/menu/stopwatch-ticker.png" id="4_3ovsr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fsom3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(1150, 650)
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 600.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+alignment = 1
+
+[node name="BoxContainer" type="BoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 125)
+layout_mode = 2
+
+[node name="Title" type="Sprite2D" parent="HBoxContainer/VBoxContainer/BoxContainer"]
+texture = ExtResource("2_uqeha")
+centered = false
+
+[node name="Stopwatch" type="Sprite2D" parent="HBoxContainer/VBoxContainer/BoxContainer"]
+position = Vector2(244, 57)
+texture = ExtResource("3_wem23")
+
+[node name="Stopwatch-ticker" type="Sprite2D" parent="HBoxContainer/VBoxContainer/BoxContainer"]
+position = Vector2(244, 57)
+texture = ExtResource("4_3ovsr")
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit
+"
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Controls / How To Play"
