@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dn0bi74e43m45"]
+[gd_scene load_steps=16 format=3 uid="uid://dn0bi74e43m45"]
 
 [ext_resource type="Script" uid="uid://2kyn5qq3wjl0" path="res://scripts/car/car.gd" id="1_sul5r"]
+[ext_resource type="PackedScene" uid="uid://dda1jgjbw4b73" path="res://assets/models/tree.tscn" id="2_7h61r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifgtf"]
 albedo_color = Color(0.5921569, 0, 0, 1)
@@ -15,22 +16,54 @@ albedo_color = Color(0.552962, 1.3596937e-06, 4.813075e-07, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kelw5"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_abcde"]
+noise_type = 2
+frequency = 0.05
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fghij"]
+noise = SubResource("FastNoiseLite_abcde")
+seamless = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klmno"]
+albedo_color = Color(0, 0.462885, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_fghij")
+uv1_scale = Vector3(10, 10, 10)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_c1y5s"]
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_g2g5x"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sul5r"]
+
+[sub_resource type="Sky" id="Sky_7h61r"]
+sky_material = SubResource("ProceduralSkyMaterial_sul5r")
+
+[sub_resource type="Environment" id="Environment_0sr1o"]
+background_mode = 2
+sky = SubResource("Sky_7h61r")
+ambient_light_color = Color(0.3200091, 0.6900171, 0.99999994, 1)
+
 [node name="3DNode" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 0, -8.742278e-08, -1.0446648e-08, 0.9928347, 0.11949572, 8.679636e-08, 0.11949572, -0.9928347, 0.085000634, 1.2421241, -3.5782094)
-current = true
-
 [node name="Car" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7981763, 0)
 script = ExtResource("1_sul5r")
 
+[node name="Camera3D" type="Camera3D" parent="Car"]
+transform = Transform3D(0.99946344, 0.003913958, -0.032519184, -1.0446647e-08, 0.99283475, 0.11949573, 0.032753874, -0.11943161, 0.99230206, 0.085000634, 1.2421241, 3.7416282)
+current = true
+
 [node name="LowerBody" type="MeshInstance3D" parent="Car"]
+transform = Transform3D(0.8, 0, 0, 0, 0.7, 0, 0, 0, 0.9, 0, 0.10525584, 0)
 material_override = SubResource("StandardMaterial3D_ifgtf")
 mesh = SubResource("BoxMesh_sul5r")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Car"]
-transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0.3340463, -0.17053962)
+transform = Transform3D(0.8, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0.33404636, 0.2028954)
 material_override = SubResource("StandardMaterial3D_7h61r")
 mesh = SubResource("BoxMesh_0sr1o")
 skeleton = NodePath("../..")
@@ -38,3 +71,25 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Car"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.6, 0.12544918, 0.40620732, 0.36412895)
 shape = SubResource("BoxShape3D_kelw5")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00500226, 0, 0.0027320385)
+material_override = SubResource("StandardMaterial3D_klmno")
+mesh = SubResource("PlaneMesh_c1y5s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("ConcavePolygonShape3D_g2g5x")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0sr1o")
+
+[node name="Tree" parent="." instance=ExtResource("2_7h61r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8325185, 0, -9.025228)
+
+[node name="Tree2" parent="." instance=ExtResource("2_7h61r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4946591, 0, -13.464672)
+
+[node name="Tree3" parent="." instance=ExtResource("2_7h61r")]
+transform = Transform3D(0.99995625, 0, -0.009354828, 0, 1, 0, 0.009354828, 0, 0.99995625, 0.58962405, 0, -15.649075)

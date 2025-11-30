@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dda1jgjbw4b73"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vgr8o"]
+albedo_color = Color(0.41219604, 0.20275572, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_skti6"]
+
+[node name="Tree" type="Node3D"]
+
+[node name="trunk" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_vgr8o")
+mesh = SubResource("CylinderMesh_skti6")
