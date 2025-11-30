@@ -15,13 +15,20 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_fsom3")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 40.0
+scale = Vector2(28.703182, 16.210337)
+color = Color(0.20431672, 0.20431672, 0.20431672, 1)
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1150, 650)
 layout_mode = 0
-offset_left = -1.0
-offset_top = 1.0
-offset_right = 1149.0
-offset_bottom = 651.0
+offset_left = -16.0
+offset_right = 1134.0
+offset_bottom = 650.0
 mouse_filter = 2
 alignment = 1
 
@@ -47,17 +54,19 @@ texture = ExtResource("3_wem23")
 position = Vector2(244, 57)
 texture = ExtResource("4_3ovsr")
 
-[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit
 "
 
-[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Controls / How To Play"
 
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]

@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3 uid="uid://qm3lb3ewon1w"]
+
+[ext_resource type="Script" uid="uid://dygue2t7hvjpg" path="res://HowToPlay.gd" id="1_r7xa0"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_r7xa0")
+play_scene_path = null
+
+[node name="MainPanel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Title" type="Label" parent="MainPanel"]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 40.0
+offset_right = 671.0
+offset_bottom = 89.0
+theme_override_font_sizes/font_size = 35
+text = "How to Play"
+horizontal_alignment = 1
+
+[node name="BackButton" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 568.0
+offset_right = 88.0
+offset_bottom = 608.0
+
+[node name="Label" type="Label" parent="MainPanel/BackButton"]
+layout_mode = 2
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel"]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 104.0
+offset_right = 966.0
+offset_bottom = 504.0
+
+[node name="Instructions" type="Label" parent="MainPanel/ScrollContainer"]
+layout_mode = 2
+text = "Pocket Trials — How To Play
+
+Objective:
+Finish the track as fast as possible. Drift to build boost, use boost on straights, and try to beat your best time or your ghost.
+
+Basic Controls:
+W – Accelerate
+S – Reverse (15% max speed)
+A / D – Steer Left / Right
+Space – Drift (reduced friction and builds boost)
+E – Use Boost
+R – Restart the Race
+Esc – Pause / Back to Menu
+
+Drifting:
+Hold Space while steering to drift.
+Drifting lowers friction, lets you take tighter turns, and charges your boost meter.
+
+Boost:
+Press E to use your stored boost.
+Boost is most effective on straightaways and when exiting corners.
+
+Ghost Racer:
+Enable the ghost to race against your best run.
+The ghost replays your fastest time.
+If you set a new best time, the ghost updates.
+Ghost files can be shared between players.
+
+HUD Elements:
+Timer – Shows your current run time
+Lap Counter – Current lap / total laps
+Boost Bar – Your current boost amount
+Best Time – Your fastest time recorded on the track
+
+Tips:
+• Drift early to maintain speed.
+• Use boost out of corners or on long straights.
+• Avoid hitting walls — it kills your speed.
+• Press R to instantly restart a bad run.
+"
