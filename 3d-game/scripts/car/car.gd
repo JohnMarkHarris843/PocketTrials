@@ -4,9 +4,9 @@ extends CharacterBody3D
 @export var acceleration = 5.0
 @export var friction = 1.0 # How much the car slows down. Lower is more slippery.
 @export var turn_speed = 1.0
-@export var traction = 4.0 # How much grip the car has. Lower is more drifty.
-@export var drift_traction_multiplier = 0.5 # How much traction is reduced when drifting.
-@export var drift_turn_multiplier = 1.5 # How much sharper the car turns when drifting.
+@export var traction = 3.0 # How much grip the car has. Lower is more drifty.
+@export var drift_traction_multiplier = 0.2 # How much traction is reduced when drifting.
+@export var drift_turn_multiplier = 2.0 # How much sharper the car turns when drifting.
 
 @export var steer_angle = 0.4
 @export var wheel_radius = 0.4 # Adjust this to match your wheel's size
@@ -14,10 +14,15 @@ extends CharacterBody3D
 # Camera effects
 @export var sway_strength = 0.1
 @export var sway_speed = 5.0
-@export var max_fov_increase = 10.0
-@export var fov_change_speed = 2.0
+@export var max_fov_increase = 20.0
+@export var fov_change_speed = 5.0
 
-@onready var wheels_node = $wheels
+@export var tire_mark_scene: PackedScene
+@export var drift_threshold = 1.0 # Lateral speed at which tire marks appear
+@export var tire_mark_offset_left = Vector3(-0.3, -0.4, 0.5) # Offset for left rear wheel
+@export var tire_mark_offset_right = Vector3(0.3, -0.4, 0.5) # Offset for right rear wheel
+
+@onready var wheels_node = $wheelsFront
 @onready var camera = $Camera3D
 
 var initial_fov: float
@@ -34,7 +39,8 @@ func _physics_process(delta):
 
 	var current_turn_speed = turn_speed
 	var current_traction = traction
-	if Input.is_action_pressed("drift"):
+	var is_drifting = Input.is_action_pressed("drift")
+	if is_drifting:
 		current_traction *= drift_traction_multiplier
 		current_turn_speed *= drift_turn_multiplier
 
@@ -57,6 +63,11 @@ func _physics_process(delta):
 	var forward_velocity = velocity.dot(-transform.basis.z)
 	var lateral_velocity = velocity.dot(transform.basis.x)
 	
+	if is_drifting:
+		print("Drifting! Lateral Velocity: %s, Drift Threshold: %s" % [lateral_velocity, drift_threshold])
+		if lateral_velocity > drift_threshold or lateral_velocity < -drift_threshold:
+			_spawn_tire_mark()
+
 	var desired_velocity = -transform.basis.z * forward_velocity
 	desired_velocity += -transform.basis.x * lerp(lateral_velocity, 0.0, current_traction * delta)
 	velocity = desired_velocity.limit_length(speed)
@@ -71,10 +82,24 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func _update_camera(turn_direction, delta):
+func _spawn_tire_mark():
+	if tire_mark_scene:
+		# Spawn for left tire
+		var mark_left = tire_mark_scene.instantiate()
+		get_parent().add_child(mark_left)
+		mark_left.global_transform.origin = global_transform.origin + global_transform.basis.x * tire_mark_offset_left.x + Vector3(0, tire_mark_offset_left.y, 0) + global_transform.basis.z * tire_mark_offset_left.z
+		mark_left.rotation.y = rotation.y
+
+		# Spawn for right tire
+		var mark_right = tire_mark_scene.instantiate()
+		get_parent().add_child(mark_right)
+		mark_right.global_transform.origin = global_transform.origin + global_transform.basis.x * tire_mark_offset_right.x + Vector3(0, tire_mark_offset_right.y, 0) + global_transform.basis.z * tire_mark_offset_right.z
+		mark_right.rotation.y = rotation.y
+
+func _update_camera(_turn_direction, delta):
 	# Camera Sway
-	var target_sway = -turn_direction * sway_strength
-	camera.rotation.z = lerp(camera.rotation.z, target_sway, sway_speed * delta)
+	#var target_sway = -turn_direction * sway_strength
+	#camera.rotation.z = lerp(camera.rotation.z, target_sway, sway_speed * delta)
 
 	# FOV effect based on speed
 	var speed_ratio = velocity.length() / speed

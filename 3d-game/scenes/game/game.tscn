@@ -32,16 +32,19 @@ sky_material = SubResource("ProceduralSkyMaterial_sul5r")
 background_mode = 2
 sky = SubResource("Sky_7h61r")
 ambient_light_color = Color(0.3200091, 0.6900171, 0.99999994, 1)
+ambient_light_energy = 3.0
+reflected_light_source = 2
 
 [node name="3DNode" type="Node3D"]
 
 [node name="Car" parent="." instance=ExtResource("1_7h61r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62822485, 0)
+drift_threshold = 0.1
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0036213398, 0.037462234, -0.016759396)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014719099, 0.15046644, 0.058920383)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
