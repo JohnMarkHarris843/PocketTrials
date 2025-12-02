@@ -23,6 +23,7 @@ albedo_color = Color(0.07683582, 0.07683582, 0.07683582, 1)
 material = SubResource("StandardMaterial3D_6r2s1")
 
 [node name="Car" type="CharacterBody3D"]
+collision_mask = 6
 script = ExtResource("1_futqk")
 tire_mark_scene = ExtResource("2_6r2s1")
 drift_threshold = 0.1
@@ -44,7 +45,7 @@ mesh = SubResource("BoxMesh_g6gky")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.625, 0, 0, 0, 1.8, 0, 0.23376065, 0.0010052696)
+transform = Transform3D(0.8, 0, 0, 0, 0.5, 0, 0, 0, 1.8, 0, 0.19326878, 0.0010052696)
 shape = SubResource("BoxShape3D_7b738")
 
 [node name="wheelsFront" type="Node3D" parent="."]

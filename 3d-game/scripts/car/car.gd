@@ -50,11 +50,17 @@ func _physics_process(delta):
 
 	# Get forward/backward input
 	var input_dir = 0.0
+	var current_acceleration = acceleration
+	var max_speed = speed
 	if Input.is_action_pressed("forward"):
 		input_dir = 1.0
+	elif Input.is_action_pressed("reverse"):
+		input_dir = -1.0
+		current_acceleration = acceleration * 0.5
+		max_speed = speed * 0.25
 	
 	# Apply engine force
-	velocity += -transform.basis.z * input_dir * acceleration * delta
+	velocity += -transform.basis.z * input_dir * current_acceleration * delta
 	
 	# Apply friction
 	velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
@@ -70,7 +76,7 @@ func _physics_process(delta):
 
 	var desired_velocity = -transform.basis.z * forward_velocity
 	desired_velocity += -transform.basis.x * lerp(lateral_velocity, 0.0, current_traction * delta)
-	velocity = desired_velocity.limit_length(speed)
+	velocity = desired_velocity.limit_length(max_speed)
 	
 	# --- Wheel and Camera Updates ---
 	# Rotate wheels for steering

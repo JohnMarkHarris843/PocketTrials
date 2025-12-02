@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dn0bi74e43m45"]
+[gd_scene load_steps=13 format=3 uid="uid://dn0bi74e43m45"]
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_7h61r"]
 [ext_resource type="PackedScene" uid="uid://dda1jgjbw4b73" path="res://assets/models/tree.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_kelw5"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_abcde"]
 noise_type = 2
@@ -38,13 +40,12 @@ reflected_light_source = 2
 [node name="3DNode" type="Node3D"]
 
 [node name="Car" parent="." instance=ExtResource("1_7h61r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62822485, 0)
-drift_threshold = 0.1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37531567, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014719099, 0.15046644, 0.058920383)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2921733, 0.15047026, 0.08653116)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
@@ -54,11 +55,28 @@ shape = SubResource("ConcavePolygonShape3D_g2g5x")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0sr1o")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.82365143, 0.5670965, 0, -0.5670965, 0.82365143, 12.358641, 70.26099, 52.71609)
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_blur = 0.5
+
 [node name="Tree" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8325185, 0, -9.025228)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.8325185, 2.3557858, -9.025228)
 
 [node name="Tree2" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4946591, 0, -13.464672)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4.1366773, 2.3557858, -9.025228)
 
 [node name="Tree3" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(0.99995625, 0, -0.009354828, 0, 1, 0, 0.009354828, 0, 0.99995625, 0.58962405, 0, -15.649075)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.3033204, 2.3557858, -9.025228)
+
+[node name="tires" parent="." instance=ExtResource("3_0sr1o")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.9971011, 0.13007495, 0.6071358)
+
+[node name="walls" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863632, 0.3873701, -1.0222883)
+
+[node name="Node3D2" parent="walls" instance=ExtResource("4_kelw5")]
+transform = Transform3D(0.9756151, 0, -0.21948864, 0, 1, 0, 0.21948864, 0, 0.9756151, 0.28050804, 0.0022338629, -1.9364455)
+
+[node name="Node3D" parent="walls" instance=ExtResource("4_kelw5")]
