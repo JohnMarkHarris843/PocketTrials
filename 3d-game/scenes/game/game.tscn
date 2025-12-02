@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37531567, 0)
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2921733, 0.15047026, 0.08653116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31753817, 0.11239457, 0.09919548)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
@@ -74,7 +74,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.3033204, 2.3557858, -9.0252
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.9971011, 0.13007495, 0.6071358)
 
 [node name="walls" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863632, 0.3873701, -1.0222883)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863632, 0.2989956, -1.0222883)
 
 [node name="Node3D2" parent="walls" instance=ExtResource("4_kelw5")]
 transform = Transform3D(0.9756151, 0, -0.21948864, 0, 1, 0, 0.21948864, 0, 0.9756151, 0.28050804, 0.0022338629, -1.9364455)

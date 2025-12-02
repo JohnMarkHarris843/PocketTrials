@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmk7x7axytenk"]
+
+[ext_resource type="Shader" uid="uid://b0wjt3ocuix5m" path="res://assets/models/checkerboardShader.gdshader" id="1_bw6yw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5bl8"]
+albedo_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0vo4y"]
+material = SubResource("StandardMaterial3D_r5bl8")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 3.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1t51"]
+render_priority = 0
+shader = ExtResource("1_bw6yw")
+shader_parameter/color_a = Color(1, 1, 1, 1)
+shader_parameter/color_b = Color(0, 0, 0, 1)
+shader_parameter/tiles = 8.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_lr0lh"]
+material = SubResource("ShaderMaterial_h1t51")
+size = Vector3(0.25, 1, 6.5)
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="leftPole" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_0vo4y")
+
+[node name="rightPole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+mesh = SubResource("CylinderMesh_0vo4y")
+
+[node name="banner" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5667427, 3)
+mesh = SubResource("BoxMesh_lr0lh")
