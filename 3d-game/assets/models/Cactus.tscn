@@ -1,126 +1,88 @@
-[gd_scene load_steps=23 format=3 uid="uid://b73uh5tkt4jmw"]
+[gd_scene load_steps=6 format=3 uid="uid://b73uh5tkt4jmw"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_6ojhj"]
-top_radius = 0.35
-bottom_radius = 0.35
-height = 1.6
+[ext_resource type="Material" uid="uid://wnr5x5ex5fth" path="res://assets/textures/cactusTexture.tres" id="1_k6ajf"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_6ojhj"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_k6ajf"]
+height = 4.0898438
+radius = 0.25
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k6ajf"]
-noise = SubResource("FastNoiseLite_6ojhj")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dml8v"]
+radius = 0.25
+height = 4.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6ajf"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_k6ajf")
-roughness = 0.8
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6c2g1"]
+material = ExtResource("1_k6ajf")
+radius = 0.26
+height = 0.6
 
-[sub_resource type="SphereMesh" id="SphereMesh_grrhy"]
-radius = 0.35
+[sub_resource type="BoxShape3D" id="BoxShape3D_dml8v"]
+size = Vector3(0.56873703, 0.5869751, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_dml8v"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
+[node name="Cactus" type="StaticBody3D"]
+collision_layer = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6c2g1"]
-noise = SubResource("FastNoiseLite_dml8v")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3i15h"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_6c2g1")
-roughness = 0.8
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_dml8v"]
-top_radius = 0.18
-bottom_radius = 0.18
-height = 0.8
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_if68v"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_grrhy"]
-generate_mipmaps = false
-noise = SubResource("FastNoiseLite_if68v")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if68v"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_grrhy")
-roughness = 0.8
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_3i15h"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7nql5"]
-noise = SubResource("FastNoiseLite_3i15h")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6c2g1"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_7nql5")
-roughness = 0.8
-
-[sub_resource type="SphereMesh" id="SphereMesh_ukpvp"]
-radius = 0.15
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_m2gll"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_66ljb"]
-noise = SubResource("FastNoiseLite_m2gll")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nnijg"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_66ljb")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_11qhj"]
-noise_type = 2
-frequency = 1.0
-fractal_octaves = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g1smn"]
-noise = SubResource("FastNoiseLite_11qhj")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7yqw"]
-albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
-albedo_texture = SubResource("NoiseTexture2D_g1smn")
-
-[node name="Cactus" type="Node3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.66015625, 0)
+shape = SubResource("CylinderShape3D_k6ajf")
 
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_6ojhj")
-surface_material_override/0 = SubResource("StandardMaterial3D_k6ajf")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.62728935, 0)
+mesh = SubResource("CapsuleMesh_dml8v")
+surface_material_override/0 = ExtResource("1_k6ajf")
 
-[node name="Top" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012789965, 0.72366226, 0.00048208237)
-mesh = SubResource("SphereMesh_grrhy")
-surface_material_override/0 = SubResource("StandardMaterial3D_3i15h")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
-[node name="ArmL" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.9999958, 0.0028691022, -0.00034236445, -0.0028688987, 0.9999957, 0.00059310865, 0.0003440651, -0.0005921238, 0.99999976, 0.84525836, 0.6241007, 0)
-mesh = SubResource("CylinderMesh_dml8v")
-surface_material_override/0 = SubResource("StandardMaterial3D_if68v")
+[node name="cactusArm" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.013742721, -0.4998111, 0, 0.4998111, 0.013742721, 0.21816993, 0.12372446, -0.6844829)
 
-[node name="ArmR" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82594776, 0.22150958, 0.02447033)
-mesh = SubResource("CylinderMesh_dml8v")
-skeleton = NodePath("../ArmL")
-surface_material_override/0 = SubResource("StandardMaterial3D_6c2g1")
+[node name="CSGTorus3D" type="CSGTorus3D" parent="cactusArm"]
+transform = Transform3D(-0.0030543, 0, -0.99999535, 0, 1, 0, 0.99999535, 0, -0.0030543, 0, 1.3818365, -0.84355116)
+sides = 32
+ring_sides = 32
+material = ExtResource("1_k6ajf")
 
-[node name="ArmL_Connector" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.008848746, 0.99996084, 0, -0.99996084, 0.008848746, 0, 0, 0, 1, 0.52198005, 0.26374206, 0)
-mesh = SubResource("SphereMesh_ukpvp")
-surface_material_override/0 = SubResource("StandardMaterial3D_nnijg")
+[node name="CSGBox3D" type="CSGBox3D" parent="cactusArm/CSGTorus3D"]
+transform = Transform3D(1, 7.450581e-09, 4.6406967e-10, 0, 0.9999986, 2.2555469e-10, -7.275958e-12, 4.3655746e-11, 1.0000001, -0.5564315, 0.033257123, -0.03803897)
+operation = 2
+size = Vector3(1.237793, 1, 2.5438843)
 
-[node name="ArmR_Connector" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.008848746, 0.99996084, 0, -0.99996084, 0.008848746, 0, 0, 0, 1, -0.50864506, -0.105496824, 0)
-mesh = SubResource("SphereMesh_ukpvp")
-surface_material_override/0 = SubResource("StandardMaterial3D_m7yqw")
+[node name="CSGBox3D2" type="CSGBox3D" parent="cactusArm/CSGTorus3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02293706, 0.05071318, 0.71731687)
+operation = 2
+size = Vector3(2.3965302, 0.9650879, 1.0331726)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cactusArm"]
+transform = Transform3D(1, 0, 0, 0, -3.9115548e-08, -0.9999992, 0, 0.9999992, -3.9115548e-08, 0.7390553, 1.3756403, -0.8037406)
+mesh = SubResource("CapsuleMesh_6c2g1")
+
+[node name="cactusArm2" type="Node3D" parent="."]
+transform = Transform3D(-0.29913184, 0.02279829, 0.0007314294, 0, 0.008246705, -0.34986773, -0.022806909, -0.2990188, -0.009593313, -0.105185956, 0.63681644, 0.44485557)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="cactusArm2"]
+transform = Transform3D(-0.0061086, 0, -1.9999907, 0, 2, 0, 1.9999907, 0, -0.0061086, 0, 1.3818365, -0.84355116)
+inner_radius = 0.722
+sides = 32
+ring_sides = 32
+material = ExtResource("1_k6ajf")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="cactusArm2/CSGTorus3D"]
+transform = Transform3D(1, 7.450581e-09, 4.6406967e-10, 0, 0.9999986, 2.2555469e-10, -7.275958e-12, 4.3655746e-11, 1.0000001, -0.5564315, 0.033257123, -0.03803897)
+operation = 2
+size = Vector3(1.237793, 1, 2.5438843)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="cactusArm2/CSGTorus3D"]
+transform = Transform3D(1, -7.450581e-09, 2.6542693e-08, -8.940697e-08, 0.9999997, 0, 1.3038516e-08, 2.9802322e-08, 1, 0.020663261, 0.021871224, 0.42914864)
+operation = 2
+size = Vector3(2.3965302, 0.9650879, 1.3398285)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cactusArm2"]
+transform = Transform3D(1.1449037, -1.6298145e-09, 8.195639e-08, 2.9802322e-08, -2.6077032e-08, -1.1392313, 6.9849193e-10, 0.84213006, -4.4703484e-08, 1.7007046, 1.3761818, -0.7375532)
+mesh = SubResource("CapsuleMesh_6c2g1")
+
+[node name="armCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.25, 0.38115698, 0.3955217, 0)
+shape = SubResource("BoxShape3D_dml8v")
+
+[node name="armCollision2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.25, -0.37532127, 0.7171937, 0)
+shape = SubResource("BoxShape3D_dml8v")
