@@ -39,10 +39,12 @@ func _physics_process(delta):
 
 	var current_turn_speed = turn_speed
 	var current_traction = traction
+	var max_speed = speed
 	var is_drifting = Input.is_action_pressed("drift")
 	if is_drifting:
 		current_traction *= drift_traction_multiplier
 		current_turn_speed *= drift_turn_multiplier
+		max_speed *= 0.8
 
 	# --- Rotation and Drifting Physics ---
 	if velocity.length() > 0.5:
@@ -51,7 +53,6 @@ func _physics_process(delta):
 	# Get forward/backward input
 	var input_dir = 0.0
 	var current_acceleration = acceleration
-	var max_speed = speed
 	if Input.is_action_pressed("forward"):
 		input_dir = 1.0
 	elif Input.is_action_pressed("reverse"):
