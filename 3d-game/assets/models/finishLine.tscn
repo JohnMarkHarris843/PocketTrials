@@ -16,11 +16,12 @@ render_priority = 0
 shader = ExtResource("1_bw6yw")
 shader_parameter/color_a = Color(1, 1, 1, 1)
 shader_parameter/color_b = Color(0, 0, 0, 1)
-shader_parameter/tiles = 8.0
+shader_parameter/tiles = 20.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_lr0lh"]
+lightmap_size_hint = Vector2i(37, 48)
 material = SubResource("ShaderMaterial_h1t51")
-size = Vector3(0.25, 1, 6.5)
+size = Vector3(0.25, 1, 0.93)
 
 [node name="Node3D" type="StaticBody3D"]
 
@@ -31,6 +32,40 @@ mesh = SubResource("CylinderMesh_0vo4y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 mesh = SubResource("CylinderMesh_0vo4y")
 
-[node name="banner" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5667427, 3)
+[node name="banner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5667427, 3.0361915)
+
+[node name="block" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.8090684)
 mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block2" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, -1.8751752)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block3" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.9496448)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block4" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, -0.014992237)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block5" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.8973055)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block6" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 1.8336244)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
+
+[node name="block7" type="MeshInstance3D" parent="banner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.7586498)
+mesh = SubResource("BoxMesh_lr0lh")
+skeleton = NodePath("../..")
