@@ -1,0 +1,126 @@
+[gd_scene load_steps=23 format=3 uid="uid://b73uh5tkt4jmw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6ojhj"]
+top_radius = 0.35
+bottom_radius = 0.35
+height = 1.6
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6ojhj"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k6ajf"]
+noise = SubResource("FastNoiseLite_6ojhj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6ajf"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_k6ajf")
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_grrhy"]
+radius = 0.35
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dml8v"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6c2g1"]
+noise = SubResource("FastNoiseLite_dml8v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3i15h"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_6c2g1")
+roughness = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dml8v"]
+top_radius = 0.18
+bottom_radius = 0.18
+height = 0.8
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_if68v"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_grrhy"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_if68v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if68v"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_grrhy")
+roughness = 0.8
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3i15h"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7nql5"]
+noise = SubResource("FastNoiseLite_3i15h")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6c2g1"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_7nql5")
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_ukpvp"]
+radius = 0.15
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m2gll"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_66ljb"]
+noise = SubResource("FastNoiseLite_m2gll")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nnijg"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_66ljb")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_11qhj"]
+noise_type = 2
+frequency = 1.0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g1smn"]
+noise = SubResource("FastNoiseLite_11qhj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7yqw"]
+albedo_color = Color(0.3529412, 0.6431373, 0.3882353, 1)
+albedo_texture = SubResource("NoiseTexture2D_g1smn")
+
+[node name="Cactus" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_6ojhj")
+surface_material_override/0 = SubResource("StandardMaterial3D_k6ajf")
+
+[node name="Top" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012789965, 0.72366226, 0.00048208237)
+mesh = SubResource("SphereMesh_grrhy")
+surface_material_override/0 = SubResource("StandardMaterial3D_3i15h")
+
+[node name="ArmL" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9999958, 0.0028691022, -0.00034236445, -0.0028688987, 0.9999957, 0.00059310865, 0.0003440651, -0.0005921238, 0.99999976, 0.84525836, 0.6241007, 0)
+mesh = SubResource("CylinderMesh_dml8v")
+surface_material_override/0 = SubResource("StandardMaterial3D_if68v")
+
+[node name="ArmR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82594776, 0.22150958, 0.02447033)
+mesh = SubResource("CylinderMesh_dml8v")
+skeleton = NodePath("../ArmL")
+surface_material_override/0 = SubResource("StandardMaterial3D_6c2g1")
+
+[node name="ArmL_Connector" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.008848746, 0.99996084, 0, -0.99996084, 0.008848746, 0, 0, 0, 1, 0.52198005, 0.26374206, 0)
+mesh = SubResource("SphereMesh_ukpvp")
+surface_material_override/0 = SubResource("StandardMaterial3D_nnijg")
+
+[node name="ArmR_Connector" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.008848746, 0.99996084, 0, -0.99996084, 0.008848746, 0, 0, 0, 1, -0.50864506, -0.105496824, 0)
+mesh = SubResource("SphereMesh_ukpvp")
+surface_material_override/0 = SubResource("StandardMaterial3D_m7yqw")
