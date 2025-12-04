@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dn0bi74e43m45"]
+[gd_scene load_steps=14 format=3 uid="uid://dn0bi74e43m45"]
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_7h61r"]
 [ext_resource type="PackedScene" uid="uid://dda1jgjbw4b73" path="res://assets/models/tree.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/raceTimer.tscn" id="2_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_kelw5"]
 
@@ -51,6 +52,12 @@ mesh = SubResource("PlaneMesh_c1y5s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("ConcavePolygonShape3D_g2g5x")
+
+[node name="TimerUI" parent="." instance=ExtResource("2_lfrn8")]
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 2.0
+offset_bottom = 6.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0sr1o")

@@ -19,8 +19,8 @@ extends CharacterBody3D
 
 @export var tire_mark_scene: PackedScene
 @export var drift_threshold = 1.0 # Lateral speed at which tire marks appear
-@export var tire_mark_offset_left = Vector3(-0.3, -0.4, 0.5) # Offset for left rear wheel
-@export var tire_mark_offset_right = Vector3(0.3, -0.4, 0.5) # Offset for right rear wheel
+@export var tire_mark_offset_left = Vector3(-0.45, -0.5, 0.5) # Offset for left rear wheel
+@export var tire_mark_offset_right = Vector3(0.45, -0.5, 0.5) # Offset for right rear wheel
 
 @onready var wheels_node = $wheelsFront
 @onready var camera = $Camera3D
