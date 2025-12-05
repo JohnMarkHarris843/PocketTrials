@@ -84,7 +84,16 @@ transform = Transform3D(0.9756151, 0, -0.21948864, 0, 1, 0, 0.21948864, 0, 0.975
 [node name="Cactus" parent="." instance=ExtResource("5_3amc3")]
 transform = Transform3D(0.67887765, 0, 0.7342514, 0, 1, 0, -0.7342514, 0, 0.67887765, 1.9940143, 1.2196199, -9)
 
+[node name="Cactus" parent="Cactus" instance=ExtResource("5_3amc3")]
+transform = Transform3D(0.67887765, 0, 0.73425144, 0, 1, 0, -0.73425144, 0, 0.67887765, -5.9082527, 1.2196199, -1.693685)
+
+[node name="Cactus2" parent="Cactus" instance=ExtResource("5_3amc3")]
+transform = Transform3D(0.67887765, 0, 0.7342514, 0, 1, 0, -0.7342514, 0, 0.67887765, 1.9940143, 1.2196199, -9)
+
+[node name="Cactus" parent="Cactus/Cactus2" instance=ExtResource("5_3amc3")]
+transform = Transform3D(0.67887765, 0, 0.7342515, 0, 1, 0, -0.7342515, 0, 0.67887765, -5.908251, -0.65070605, -1.6936847)
+
 [node name="Cactus2" parent="." instance=ExtResource("5_3amc3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.38621092, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5707192, 0.38621092, -9.225963)
 
 [node name="TimerUI" parent="." instance=ExtResource("6_c7d2s")]

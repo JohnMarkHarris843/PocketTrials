@@ -34,6 +34,10 @@ size = Vector2(100, 100)
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sul5r"]
+sky_top_color = Color(0.46666667, 0.7882353, 1, 1)
+sky_horizon_color = Color(0.6509804, 0.8666667, 1, 1)
+ground_bottom_color = Color(0.28710002, 0.99, 0.814275, 1)
+ground_curve = 0.024622926
 
 [sub_resource type="Sky" id="Sky_7h61r"]
 sky_material = SubResource("ProceduralSkyMaterial_sul5r")
@@ -48,7 +52,7 @@ reflected_light_source = 2
 [sub_resource type="Curve3D" id="Curve3D_2a8rs"]
 closed = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.024085581, 0.084278464, -0.8580013, 0, 0, 0, 0, 0, 0, -0.093044996, -0.08547592, -29.374474, 0, 0, 0, 0, 0, 0, 36.655388, -0.07441485, -30.392956, 0, 0, 0, 0, 0, 0, 37.419582, -0.06073703, 18.821753, 0, 0, 0, 0, 0, 0, -0.33509254, -0.024077058, 21.12075),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.024085581, 0.084278464, -0.8580013, 0, 0, 0, 0, 0, 0, -0.093044996, 0.2293737, -29.374474, 0, 0, 0, 0, 0, 0, 36.655388, 0.03929782, -30.392956, 0, 0, 0, 0, 0, 0, 37.419582, -0.30922973, 18.821753, 0, 0, 0, 0, 0, 0, -0.33509254, 0.3371011, 21.12075),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
@@ -65,7 +69,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4489846, 0.37531567, 0)
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.318, 0, 0.104)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.453375, 0.02685833, 0.106681734)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
@@ -95,7 +99,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863632, 0.22650677, -1.022
 [node name="Node3D" parent="walls/segment" instance=ExtResource("4_kelw5")]
 
 [node name="Node3D2" parent="walls/segment" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.976915, 0, 0)
 
 [node name="segment2" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9944553)
@@ -103,54 +107,60 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9944553)
 [node name="Node3D" parent="walls/segment2" instance=ExtResource("4_kelw5")]
 
 [node name="Node3D2" parent="walls/segment2" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.861886, 0, 3.3328218)
 
 [node name="segment3" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.9473715)
 
 [node name="Node3D" parent="walls/segment3" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5881791, 0, 0)
 
 [node name="Node3D2" parent="walls/segment3" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7660217, 0, 0)
 
 [node name="segment4" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.941827)
 
 [node name="Node3D" parent="walls/segment4" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6207919, 0, 0)
 
 [node name="Node3D2" parent="walls/segment4" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7594113, 0, 0)
 
 [node name="segment5" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.910289)
 
 [node name="Node3D" parent="walls/segment5" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7086787, 0, 0)
 
 [node name="Node3D2" parent="walls/segment5" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7744246, 0, 0)
 
 [node name="segment6" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.904744)
 
 [node name="Node3D" parent="walls/segment6" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7195663, 0, 0)
 
 [node name="Node3D2" parent="walls/segment6" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8048854, 0, 0)
 
 [node name="segment7" type="Node3D" parent="walls"]
 
 [node name="Node3D" parent="walls/segment7" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5064726, 0, 0)
 
 [node name="Node3D2" parent="walls/segment7" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8668833, 0, 0)
 
 [node name="segment8" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9944553)
 
 [node name="Node3D" parent="walls/segment8" instance=ExtResource("4_kelw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5830679, 0, 0)
 
 [node name="Node3D2" parent="walls/segment8" instance=ExtResource("4_kelw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.865765, 0, 0)
 
 [node name="segment9" type="Node3D" parent="walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.56456, 0, 0)
@@ -247,9 +257,11 @@ script = ExtResource("9_5jirj")
 [node name="Track" type="Node3D" parent="."]
 
 [node name="CenterPath" type="Path3D" parent="Track"]
+visible = false
 curve = SubResource("Curve3D_2a8rs")
 
 [node name="Roadbuilder" type="Node3D" parent="."]
+visible = false
 script = ExtResource("10_4j704")
 path_node = NodePath("../Track/CenterPath")
 
@@ -296,13 +308,13 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 16.54018, 2.3557858, -0.26773
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -7.515253, 2.3557858, 20.815952)
 
 [node name="Tree14" parent="trees" instance=ExtResource("2_7h61r")]
-transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 6.7467012, 2.3557858, 19.500557)
+transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 6.7467012, 2.3557858, 15.248264)
 
 [node name="Tree15" parent="trees" instance=ExtResource("2_7h61r")]
-transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 12.426134, 2.3557858, 19.320255)
+transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 12.426134, 2.3557858, 14.918671)
 
 [node name="Tree16" parent="trees" instance=ExtResource("2_7h61r")]
-transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 9.486268, 2.3557858, 20.985178)
+transform = Transform3D(1.7402986, 0, 0.9855762, 0, 2, 0, -0.9855762, 0, 1.7402986, 9.486268, 2.3557858, 24.590717)
 
 [node name="Tree17" parent="trees" instance=ExtResource("2_7h61r")]
 transform = Transform3D(-1.9505767, 0, -0.44187146, 0, 2, 0, 0.44187146, 0, -1.9505767, -3.8665035, 2.3557858, -27.908236)
@@ -332,7 +344,7 @@ transform = Transform3D(-0.9354937, 0, 1.9474653, 0, 2.422399, 0, -2.0206096, 0,
 transform = Transform3D(-0.9354937, 0, 1.9474653, 0, 2.422399, 0, -2.0206096, 0, -0.90162957, 7.0781612, 2.6596484, -17.622444)
 
 [node name="Node3D" parent="." instance=ExtResource("11_5jirj")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.6018214, 1.3275683, -6.106694)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0175076, 1.3275683, -6.106694)
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
 multimesh = SubResource("MultiMesh_kp23o")
@@ -341,31 +353,31 @@ multimesh = SubResource("MultiMesh_kp23o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31641436, 0, -2.6056805)
 
 [node name="tireStack" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.3709702, -0.015456945, -10.223913)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 2.7916362, -0.015456945, -10.223913)
 
 [node name="tireStack2" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.3709702, -0.015456945, -11.166997)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 3.1409068, -0.015456945, -11.166997)
 
 [node name="tireStack3" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.3709702, -0.015456945, -12.192286)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 3.0201044, -0.015456945, -12.192286)
 
 [node name="tireStack4" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 1.1637349, -0.015456945, -13.31355)
+transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 3.463943, -0.015456945, -13.31355)
 
 [node name="tireStack5" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 0.8632531, -0.015456945, -14.117567)
+transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 3.4269662, -0.015456945, -14.117567)
 
 [node name="tireStack6" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 0.5459802, -0.015456945, -14.966515)
+transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 3.5098956, -0.015456945, -14.966515)
 
 [node name="tireStack7" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, -0.047474742, -0.015456945, -15.681225)
+transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, 3.6500359, -0.015456945, -15.681225)
 
 [node name="tireStack8" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, -0.71442056, -0.015456945, -16.338417)
+transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, 3.6856751, -0.015456945, -16.338417)
 
 [node name="tireStack9" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, -1.3953359, -0.015456945, -17.009377)
+transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, 3.747436, -0.015456945, -17.009377)
 
 [node name="tireStack10" parent="tires" instance=ExtResource("3_0sr1o")]
-transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, -2.0334067, -0.015456945, -17.638117)
+transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, 4.151557, -0.015456945, -17.638117)
