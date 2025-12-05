@@ -1,25 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://b7ub2d6yxd7bk"]
+[gd_scene load_steps=28 format=3 uid="uid://b7ub2d6yxd7bk"]
 
 [ext_resource type="Script" uid="uid://2kyn5qq3wjl0" path="res://scripts/car/car.gd" id="1_futqk"]
 [ext_resource type="PackedScene" uid="uid://dgw7k2xsmq23g" path="res://scenes/effects/tire_mark.tscn" id="2_6r2s1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7b738"]
-
-[sub_resource type="Animation" id="Animation_6r2s1"]
-resource_name = "shake"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("body:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.020000014, 0.12000002, 0.21000001, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.12217305, 0), Vector3(0, 0, 0), Vector3(0, -0.12217305, 0), Vector3(0, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_hxla8"]
 length = 0.001
@@ -50,6 +34,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.15, 0.49999997, 0.15),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0.1, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6r2s1"]
+resource_name = "shake"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.020000014, 0.12000002, 0.21000001, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.12217305, 0), Vector3(0, 0, 0), Vector3(0, -0.12217305, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g6gky"]
@@ -107,6 +107,21 @@ material = SubResource("StandardMaterial3D_7b738")
 top_radius = 0.02
 bottom_radius = 0.02
 height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2pbgb"]
+transparency = 1
+albedo_color = Color(0.96862745, 0.25490198, 0, 0.5882353)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6r2s1"]
+material = SubResource("StandardMaterial3D_2pbgb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ewxw2"]
+transparency = 1
+albedo_color = Color(1, 0.58431375, 0.2509804, 0.5882353)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g6gky"]
+material = SubResource("StandardMaterial3D_ewxw2")
+top_radius = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmbhp"]
 albedo_color = Color(0.2476063, 0.48092085, 0.84696096, 1)
@@ -215,6 +230,28 @@ mesh = SubResource("CylinderMesh_ewxw2")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="body/exhaust"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.019472837, -0.012743864, 0.023567617)
 mesh = SubResource("CylinderMesh_cjmfr")
+
+[node name="boostEffect" type="Node3D" parent="body/exhaust"]
+
+[node name="boostLayer1" type="Node3D" parent="body/exhaust/boostEffect"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.018021643, -0.009487495, 0.11871272)
+
+[node name="boostSphere" type="MeshInstance3D" parent="body/exhaust/boostEffect/boostLayer1"]
+mesh = SubResource("SphereMesh_6r2s1")
+
+[node name="boostCone" type="MeshInstance3D" parent="body/exhaust/boostEffect/boostLayer1"]
+transform = Transform3D(0.9, 0, 0, 0, -3.934025e-08, -0.9, 0, 0.9, -3.934025e-08, 0, 0, 1.1027923)
+mesh = SubResource("CylinderMesh_g6gky")
+
+[node name="boostLayer2" type="Node3D" parent="body/exhaust/boostEffect"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.018021643, -0.004856974, 0.23825532)
+
+[node name="boostSphere" type="MeshInstance3D" parent="body/exhaust/boostEffect/boostLayer2"]
+mesh = SubResource("SphereMesh_6r2s1")
+
+[node name="boostCone" type="MeshInstance3D" parent="body/exhaust/boostEffect/boostLayer2"]
+transform = Transform3D(0.9, 0, 0, 0, -3.934025e-08, -0.9, 0, 0.9, -3.934025e-08, 0, 0, 1.1027923)
+mesh = SubResource("CylinderMesh_g6gky")
 
 [node name="windows" type="Node3D" parent="body"]
 

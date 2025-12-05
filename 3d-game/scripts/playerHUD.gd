@@ -1,6 +1,18 @@
 extends Control
 
 @onready var time_label: Label = $timerContainer/Label
+# In playerHUD.gd
+
+@onready var boost_bar = $boostNode/boostBar # Or whatever your progress bar is named
+
+func _ready():
+	# Set initial value
+	boost_bar.max_value = 100
+	boost_bar.value = 0
+
+# This function is called when the car emits the 'boost_meter_changed' signal
+func _on_boost_meter_changed(value):
+	boost_bar.value = value
 
 var elapsed_time: float = 0.0
 var is_running: bool = true # Set to false to pause the timer

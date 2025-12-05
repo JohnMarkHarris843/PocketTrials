@@ -8,6 +8,12 @@ extends CharacterBody3D
 @export var drift_traction_multiplier = 0.2 # How much traction is reduced when drifting.
 @export var drift_turn_multiplier = 2.0 # How much sharper the car turns when drifting.
 
+signal boost_meter_changed(value)
+@export var boost_meter: float = 0.0
+@export var boost_capacity: float = 100.0
+@export var boost_generation_rate: float = 10.0 # Points per second while drifting
+@export var boost_consumption_rate: float = 30.0 # Points per second while boosting
+
 @export var steer_angle = 0.4
 @export var wheel_radius = 0.4 # Adjust this to match your wheel's size
 
@@ -15,6 +21,7 @@ extends CharacterBody3D
 @export var sway_strength = 0.1
 @export var sway_speed = 5.0
 @export var max_fov_increase = 20.0
+@export var boost_fov_increase = 5
 @export var fov_change_speed = 5.0
 
 @export var tire_mark_scene: PackedScene
@@ -28,11 +35,13 @@ var _time_since_collision = 0.0
 @onready var wheels_node = $body/wheelsFront
 @onready var camera = $Camera3D
 @onready var animation_player = $AnimationPlayer # Assumes you have a node named AnimationPlayer
+@onready var boostEffectMesh = $body/exhaust/boostEffect
 
 var initial_fov: float
 
 func _ready():
 	initial_fov = camera.fov
+	boostEffectMesh.visible = false
 
 func _physics_process(delta):
 	_time_since_collision += delta
@@ -47,6 +56,16 @@ func _physics_process(delta):
 	var current_traction = traction
 	var max_speed = speed
 	var is_drifting = Input.is_action_pressed("drift")
+	var is_boosting = Input.is_action_pressed("boost") and boost_meter > 0
+
+	boostEffectMesh.visible = is_boosting
+
+	if is_boosting:
+		max_speed *= 1.5
+		boost_meter -= boost_consumption_rate * delta
+		if boost_meter < 0:
+			boost_meter = 0
+		emit_signal("boost_meter_changed", boost_meter)
 
 	if Input.is_action_just_pressed("drift"):
 		if animation_player:
@@ -56,6 +75,11 @@ func _physics_process(delta):
 		current_traction *= drift_traction_multiplier
 		current_turn_speed *= drift_turn_multiplier
 		max_speed *= 0.8
+		if boost_meter < boost_capacity:
+			boost_meter += boost_generation_rate * delta
+			if boost_meter > boost_capacity:
+				boost_meter = boost_capacity
+			emit_signal("boost_meter_changed", boost_meter)
 
 	# --- Rotation and Drifting Physics ---
 	if velocity.length() > 0.5:
@@ -72,7 +96,10 @@ func _physics_process(delta):
 		max_speed = speed * 0.25
 	
 	# Apply engine force
-	velocity += -transform.basis.z * input_dir * current_acceleration * delta
+	if is_boosting and input_dir > 0:
+		velocity = -transform.basis.z * max_speed
+	else:
+		velocity += -transform.basis.z * input_dir * current_acceleration * delta
 	
 	# Apply friction
 	velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
@@ -90,6 +117,7 @@ func _physics_process(delta):
 	velocity = desired_velocity.limit_length(max_speed)
 	
 	# --- Wheel and Camera Updates ---
+	_update_camera(turn_direction, is_boosting, delta)
 	# Rotate wheels for steering
 	for wheel in wheels_node.get_children():
 		var target_rotation = turn_direction * steer_angle
@@ -121,7 +149,7 @@ func _spawn_tire_mark():
 		mark_right.global_transform.origin = global_transform.origin + global_transform.basis.x * tire_mark_offset_right.x + Vector3(0, tire_mark_offset_right.y, 0) + global_transform.basis.z * tire_mark_offset_right.z
 		mark_right.rotation.y = rotation.y
 
-func _update_camera(_turn_direction, delta):
+func _update_camera(_turn_direction, is_boosting, delta):
 	# Camera Sway
 	#var target_sway = -turn_direction * sway_strength
 	#camera.rotation.z = lerp(camera.rotation.z, target_sway, sway_speed * delta)
@@ -129,4 +157,6 @@ func _update_camera(_turn_direction, delta):
 	# FOV effect based on speed
 	var speed_ratio = velocity.length() / speed
 	var target_fov = initial_fov + speed_ratio * max_fov_increase
+	if is_boosting:
+		target_fov += boost_fov_increase
 	camera.fov = lerp(camera.fov, target_fov, fov_change_speed * delta)
