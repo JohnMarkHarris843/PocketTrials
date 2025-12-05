@@ -1,10 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://dn0bi74e43m45"]
+[gd_scene load_steps=20 format=3 uid="uid://dn0bi74e43m45"]
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_7h61r"]
 [ext_resource type="PackedScene" uid="uid://dda1jgjbw4b73" path="res://assets/models/tree.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/raceTimer.tscn" id="2_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_kelw5"]
+[ext_resource type="Script" uid="uid://d0s5382y25ssi" path="res://scripts/RaceManager.gd" id="6_2a8rs"]
+[ext_resource type="Script" uid="uid://do3oor8hu8e1q" path="res://scripts/CheckPoint.gd" id="7_4j704"]
+[ext_resource type="Script" uid="uid://c40im4w7a7gen" path="res://scripts/FinishLine.gd" id="8_kp23o"]
+[ext_resource type="Script" uid="uid://blaconah3iim0" path="res://scripts/LapCounter.gd" id="9_5jirj"]
+[ext_resource type="Script" uid="uid://dahvmkydxw5pg" path="res://tools/road_builder.gd" id="10_4j704"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_abcde"]
 noise_type = 2
@@ -38,7 +43,15 @@ ambient_light_color = Color(0.3200091, 0.6900171, 0.99999994, 1)
 ambient_light_energy = 3.0
 reflected_light_source = 2
 
-[node name="3DNode" type="Node3D"]
+[sub_resource type="Curve3D" id="Curve3D_2a8rs"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.024085581, 0.084278464, -0.8580013, 0, 0, 0, 0, 0, 0, -0.093044996, -0.08547592, -29.374474, 0, 0, 0, 0, 0, 0, 36.655388, -0.07441485, -30.392956, 0, 0, 0, 0, 0, 0, 37.419582, -0.06073703, 18.821753, 0, 0, 0, 0, 0, 0, -0.33509254, -0.024077058, 21.12075),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Race" type="Node3D"]
 
 [node name="Car" parent="." instance=ExtResource("1_7h61r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37531567, 0)
@@ -46,7 +59,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37531567, 0)
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31753817, 0.11239457, 0.09919548)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31753817, 0.018248081, 0.09919548)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
@@ -69,13 +82,13 @@ shadow_bias = 0.0
 shadow_blur = 0.5
 
 [node name="Tree" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.8325185, 2.3557858, -9.025228)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -9.167481, 2.3557858, -0.025227547)
 
 [node name="Tree2" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4.1366773, 2.3557858, -9.025228)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4.1366773, 2.3557858, 3.9747725)
 
 [node name="Tree3" parent="." instance=ExtResource("2_7h61r")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 6.3033204, 2.3557858, -9.025228)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -15.69668, 2.3557858, 0.97477245)
 
 [node name="tires" parent="." instance=ExtResource("3_0sr1o")]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.9971011, 0.13007495, 0.6071358)
@@ -87,3 +100,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.863632, 0.2989956, -1.0222
 transform = Transform3D(0.9756151, 0, -0.21948864, 0, 1, 0, 0.21948864, 0, 0.9756151, 0.28050804, 0.0022338629, -1.9364455)
 
 [node name="Node3D" parent="walls" instance=ExtResource("4_kelw5")]
+
+[node name="RaceManager" type="Node" parent="."]
+script = ExtResource("6_2a8rs")
+
+[node name="Node3DCheckPoints" type="Node3D" parent="."]
+visible = false
+
+[node name="Checkpoint_1" type="Area3D" parent="Node3DCheckPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.393265, 0, 0)
+visible = false
+script = ExtResource("7_4j704")
+checkpoint_id = 1
+
+[node name="Checkpoint_2" type="Area3D" parent="Node3DCheckPoints"]
+visible = false
+script = ExtResource("7_4j704")
+checkpoint_id = 2
+
+[node name="Checkpoint_3" type="Area3D" parent="Node3DCheckPoints"]
+visible = false
+script = ExtResource("7_4j704")
+checkpoint_id = 3
+
+[node name="FinishLine" type="Area3D" parent="."]
+script = ExtResource("8_kp23o")
+
+[node name="LapCounter" type="Node" parent="."]
+script = ExtResource("9_5jirj")
+
+[node name="Track" type="Node3D" parent="."]
+
+[node name="CenterPath" type="Path3D" parent="Track"]
+curve = SubResource("Curve3D_2a8rs")
+
+[node name="Roadbuilder" type="Node3D" parent="."]
+script = ExtResource("10_4j704")
+path_node = NodePath("../Track/CenterPath")
