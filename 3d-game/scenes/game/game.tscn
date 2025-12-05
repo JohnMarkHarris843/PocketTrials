@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_7h61r"]
 [ext_resource type="PackedScene" uid="uid://dda1jgjbw4b73" path="res://assets/models/tree.tscn" id="2_7h61r"]
-[ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/raceTimer.tscn" id="2_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/playerHUD.tscn" id="2_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_kelw5"]
 [ext_resource type="Script" uid="uid://d0s5382y25ssi" path="res://scripts/RaceManager.gd" id="6_2a8rs"]

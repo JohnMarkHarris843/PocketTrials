@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://sl5fnhvlhh5p"]
+
+[ext_resource type="Script" uid="uid://cu7kkowqec1ge" path="res://scripts/playerHUD.gd" id="1_p4bhw"]
+[ext_resource type="Texture2D" uid="uid://cpotfrgrvhep1" path="res://assets/menu/boostContainer.png" id="2_iewuw"]
+
+[node name="playerHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p4bhw")
+
+[node name="timerContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_bottom = 45.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="timerContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "00 : 000"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 201.0
+offset_right = 131.0
+offset_bottom = 497.0
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer"]
+scale = Vector2(1.8166665, 1.8933332)
+texture = ExtResource("2_iewuw")
+centered = false

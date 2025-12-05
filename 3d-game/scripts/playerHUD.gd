@@ -1,6 +1,6 @@
 extends Control
 
-@onready var time_label: Label = $MarginContainer/Label
+@onready var time_label: Label = $timerContainer/Label
 
 var elapsed_time: float = 0.0
 var is_running: bool = true # Set to false to pause the timer

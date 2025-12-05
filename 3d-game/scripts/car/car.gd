@@ -22,8 +22,12 @@ extends CharacterBody3D
 @export var tire_mark_offset_left = Vector3(-0.45, -0.5, 0.5) # Offset for left rear wheel
 @export var tire_mark_offset_right = Vector3(0.45, -0.5, 0.5) # Offset for right rear wheel
 
-@onready var wheels_node = $wheelsFront
+@export var collision_cooldown = 0.5 # Cooldown in seconds to prevent multiple shakes
+var _time_since_collision = 0.0
+
+@onready var wheels_node = $body/wheelsFront
 @onready var camera = $Camera3D
+@onready var animation_player = $AnimationPlayer # Assumes you have a node named AnimationPlayer
 
 var initial_fov: float
 
@@ -31,6 +35,8 @@ func _ready():
 	initial_fov = camera.fov
 
 func _physics_process(delta):
+	_time_since_collision += delta
+
 	var turn_direction = 0.0
 	if Input.is_action_pressed("left"):
 		turn_direction += 1.0
@@ -41,6 +47,11 @@ func _physics_process(delta):
 	var current_traction = traction
 	var max_speed = speed
 	var is_drifting = Input.is_action_pressed("drift")
+
+	if Input.is_action_just_pressed("drift"):
+		if animation_player:
+			animation_player.play("driftJump")
+
 	if is_drifting:
 		current_traction *= drift_traction_multiplier
 		current_turn_speed *= drift_turn_multiplier
@@ -71,7 +82,6 @@ func _physics_process(delta):
 	var lateral_velocity = velocity.dot(transform.basis.x)
 	
 	if is_drifting:
-		print("Drifting! Lateral Velocity: %s, Drift Threshold: %s" % [lateral_velocity, drift_threshold])
 		if lateral_velocity > drift_threshold or lateral_velocity < -drift_threshold:
 			_spawn_tire_mark()
 
@@ -85,9 +95,17 @@ func _physics_process(delta):
 		var target_rotation = turn_direction * steer_angle
 		wheel.rotation.y = lerp(wheel.rotation.y, target_rotation, turn_speed * 5 * delta)
 
-	_update_camera(turn_direction, delta)
-
 	move_and_slide()
+
+	if _time_since_collision >= collision_cooldown:
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			if collision:
+				print("Collision detected!")
+				if animation_player:
+					animation_player.play("shake")
+				_time_since_collision = 0.0 # Reset timer
+				break # Exit loop after first valid collision
 
 func _spawn_tire_mark():
 	if tire_mark_scene:

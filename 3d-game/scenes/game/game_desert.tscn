@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://chc81oixowxp5"]
+[gd_scene load_steps=14 format=3 uid="uid://chc81oixowxp5"]
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_vouik"]
 [ext_resource type="Texture2D" uid="uid://b8l3vl8edy0e1" path="res://assets/textures/sand.jpg" id="2_vouik"]
 [ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_c7d2s"]
 [ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_dnsj1"]
 [ext_resource type="PackedScene" uid="uid://b73uh5tkt4jmw" path="res://assets/models/Cactus.tscn" id="5_3amc3"]
+[ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/playerHUD.tscn" id="6_c7d2s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klmno"]
 albedo_color = Color(0.8862745, 0.77254903, 0.5411765, 1)
@@ -85,3 +86,5 @@ transform = Transform3D(0.67887765, 0, 0.7342514, 0, 1, 0, -0.7342514, 0, 0.6788
 
 [node name="Cactus2" parent="." instance=ExtResource("5_3amc3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.38621092, -10)
+
+[node name="TimerUI" parent="." instance=ExtResource("6_c7d2s")]
