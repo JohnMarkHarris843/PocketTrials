@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsykjtceifab0"]
+
+[ext_resource type="CylinderMesh" uid="uid://brydkc46gyfhm" path="res://assets/models/simplestTree.tres" id="1_bsg3m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wrrta"]
+albedo_color = Color(0.3062588, 0.18017825, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uc1o7"]
+material = SubResource("StandardMaterial3D_wrrta")
+top_radius = 0.1
+bottom_radius = 0.1
+
+[node name="simpleTree" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2308525, 0)
+mesh = ExtResource("1_bsg3m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5165131, 0)
+mesh = SubResource("CylinderMesh_uc1o7")

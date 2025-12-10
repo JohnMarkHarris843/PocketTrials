@@ -12,6 +12,7 @@ rings = 32
 ring_segments = 3
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_53f45"]
+height = 6.883667
 
 [node name="tires" type="StaticBody3D"]
 collision_layer = 2
@@ -29,5 +30,5 @@ transform = Transform3D(0.7933357, -0.03165562, 0.09806364, 0.03189616, 0.799363
 mesh = SubResource("TorusMesh_l742q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.55, 0, 0, 0, 0.5, 0, 0, 0, 2.55, 0, 0.96270514, 0)
+transform = Transform3D(2.55, 0, 0, 0, 0.5, 0, 0, 0, 2.55, 0, 0.6937537, 0)
 shape = SubResource("CylinderShape3D_53f45")

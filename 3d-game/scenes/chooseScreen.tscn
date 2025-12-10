@@ -1,4 +1,6 @@
-[gd_scene load_steps=0 format=3 uid="uid://dnf7n1cweqfm4"]
+[gd_scene load_steps=2 format=3 uid="uid://dnf7n1cweqfm4"]
+
+[ext_resource type="Script" uid="uid://dnsq76urc88xx" path="res://scenes/choose_screen.gd" id="1_wu5v2"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,11 +9,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wu5v2")
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 433.0
-offset_top = 349.0
-offset_right = 861.0
-offset_bottom = 566.0
+offset_left = 333.0
+offset_top = 407.0
+offset_right = 761.0
+offset_bottom = 624.0
 text = "Play"
+
+[node name="selectForest" type="Button" parent="."]
+layout_mode = 0
+offset_left = 603.0
+offset_top = 220.0
+offset_right = 774.0
+offset_bottom = 290.0
+text = "forest"
+
+[node name="selectDesert" type="Button" parent="."]
+layout_mode = 0
+offset_left = 787.0
+offset_top = 219.0
+offset_right = 966.0
+offset_bottom = 292.0
+text = "desert"
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="selectForest" to="." method="_on_select_forest_pressed"]
+[connection signal="pressed" from="selectDesert" to="." method="_on_select_desert_pressed"]
