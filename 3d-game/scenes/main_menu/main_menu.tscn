@@ -5,6 +5,33 @@
 [ext_resource type="Texture2D" uid="uid://k0yew627und3" path="res://assets/menu/stopwatch.png" id="3_wem23"]
 [ext_resource type="Texture2D" uid="uid://dru5wtthrhtju" path="res://assets/menu/stopwatch-ticker.png" id="4_3ovsr"]
 
+[sub_resource type="Animation" id="Animation_wem23"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/VBoxContainer/BoxContainer/titleNode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-434, -210)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer/VBoxContainer/BoxContainer/titleNode/Stopwatch-ticker:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5235988]
+}
+
 [sub_resource type="Animation" id="Animation_uqeha"]
 resource_name = "titleBounce"
 length = 12.0
@@ -31,34 +58,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.15, 1, 1.15, 2, 2.15, 3, 3.15, 4, 4.15, 5, 5.15, 6, 6.15, 7, 7.15, 8, 8.15, 9, 9.15, 10, 10.15, 11, 11.15),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.5235988, 0.5235988, 1.0471975511965976, 1.0471975511965976, 1.5707963267948966, 1.5707963267948966, 2.0943951023931953, 2.0943951023931953, 2.6179938779914944, 2.6179938779914944, 3.141592653589793, 3.141592653589793, 3.6651914291880923, 3.6651914291880923, 4.1887902047863905, 4.1887902047863905, 4.71238898038469, 4.71238898038469, 5.235987755982989, 5.235987755982989, 5.759586531581287, 5.759586531581287, 6.283185307179586]
-}
-
-[sub_resource type="Animation" id="Animation_wem23"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HBoxContainer/VBoxContainer/BoxContainer/titleNode:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-434, -210)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HBoxContainer/VBoxContainer/BoxContainer/titleNode/Stopwatch-ticker:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.5235988]
+"values": [0.0, 0.5235988, 0.5235988, 1.0471975511965976, 1.0471975511965976, 1.5707963267948966, 1.5707963267948966, 2.0943951023931953, 2.0943951023931953, 2.6179938779914944, 2.6179938779914944, 3.141592653589793, 3.141592653589793, 3.665191429188092, 3.665191429188092, 4.1887902047863905, 4.1887902047863905, 4.71238898038469, 4.71238898038469, 5.235987755982989, 5.235987755982989, 5.759586531581287, 5.759586531581287, 6.283185307179586]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5seab"]
@@ -140,6 +140,15 @@ libraries = {
 &"": SubResource("AnimationLibrary_5seab")
 }
 
+[node name="About" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1056.0
+offset_top = 582.0
+offset_right = 1111.0
+offset_bottom = 613.0
+text = "About"
+
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="About" to="." method="_on_about_pressed"]
