@@ -37,8 +37,9 @@ data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0,
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sul5r"]
 sky_top_color = Color(0.46666667, 0.7882353, 1, 1)
-sky_horizon_color = Color(0.6509804, 0.8666667, 1, 1)
-ground_bottom_color = Color(0.28710002, 0.99, 0.814275, 1)
+sky_horizon_color = Color(0.46666667, 0.7882353, 1, 1)
+ground_bottom_color = Color(0.46666667, 0.7882353, 1, 1)
+ground_horizon_color = Color(0.46666667, 0.7882353, 1, 1)
 ground_curve = 0.024622926
 
 [sub_resource type="Sky" id="Sky_7h61r"]
