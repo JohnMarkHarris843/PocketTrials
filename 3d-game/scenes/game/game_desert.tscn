@@ -1,11 +1,30 @@
-[gd_scene load_steps=14 format=3 uid="uid://chc81oixowxp5"]
+[gd_scene load_steps=23 format=3 uid="uid://chc81oixowxp5"]
 
+[ext_resource type="Script" uid="uid://o2natvu64s3n" path="res://scenes/game/game.gd" id="1_dnsj1"]
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_vouik"]
 [ext_resource type="Texture2D" uid="uid://b8l3vl8edy0e1" path="res://assets/textures/sand.jpg" id="2_vouik"]
 [ext_resource type="PackedScene" uid="uid://jjwvnnxdrynl" path="res://assets/models/tires.tscn" id="3_c7d2s"]
 [ext_resource type="PackedScene" uid="uid://b6433kfonwl81" path="res://assets/models/racewall.tscn" id="4_dnsj1"]
 [ext_resource type="PackedScene" uid="uid://b73uh5tkt4jmw" path="res://assets/models/Cactus.tscn" id="5_3amc3"]
 [ext_resource type="PackedScene" uid="uid://sl5fnhvlhh5p" path="res://scenes/playerHUD.tscn" id="6_c7d2s"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dnsj1"]
+load_path = "res://.godot/imported/sandDunes.png-0c594433eef554a2a5f4835cda21a47e.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5pss"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_dnsj1")
+uv1_scale = Vector3(5, 2, 5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ywv6m"]
+material = SubResource("StandardMaterial3D_y5pss")
+flip_faces = true
+top_radius = 85.0
+bottom_radius = 85.0
+height = 30.0
+cap_top = false
+cap_bottom = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klmno"]
 albedo_color = Color(0.8862745, 0.77254903, 0.5411765, 1)
@@ -41,7 +60,33 @@ ambient_light_color = Color(0.3200091, 0.6900171, 0.99999994, 1)
 ambient_light_energy = 3.0
 reflected_light_source = 2
 
+[sub_resource type="Gradient" id="Gradient_cw1ro"]
+colors = PackedColorArray(0.7581918, 0.7581918, 0.7581917, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5i3k6"]
+noise_type = 3
+frequency = 0.0179
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ncg7b"]
+noise = SubResource("FastNoiseLite_5i3k6")
+color_ramp = SubResource("Gradient_cw1ro")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dnsj1"]
+albedo_color = Color(0.5739968, 0.5393205, 0.32108456, 1)
+albedo_texture = SubResource("NoiseTexture2D_ncg7b")
+
+[sub_resource type="SphereMesh" id="SphereMesh_y5pss"]
+material = SubResource("StandardMaterial3D_dnsj1")
+radius = 15.0
+height = 10.0
+
 [node name="3DNode" type="Node3D"]
+script = ExtResource("1_dnsj1")
+
+[node name="BackgroundRibbon" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18955174, 8.662304, 0.30127144)
+mesh = SubResource("CylinderMesh_ywv6m")
+skeleton = NodePath("../Floor/MeshInstance3D")
 
 [node name="Car" parent="." instance=ExtResource("1_vouik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37531567, 0)
@@ -81,19 +126,139 @@ transform = Transform3D(0.9756151, 0, -0.21948864, 0, 1, 0, 0.21948864, 0, 0.975
 
 [node name="Node3D" parent="walls" instance=ExtResource("4_dnsj1")]
 
-[node name="Cactus" parent="." instance=ExtResource("5_3amc3")]
-transform = Transform3D(0.67887765, 0, 0.7342514, 0, 1, 0, -0.7342514, 0, 0.67887765, 1.9940143, 1.2196199, -9)
-
-[node name="Cactus" parent="Cactus" instance=ExtResource("5_3amc3")]
-transform = Transform3D(0.67887765, 0, 0.73425144, 0, 1, 0, -0.73425144, 0, 0.67887765, -5.9082527, 1.2196199, -1.693685)
-
-[node name="Cactus2" parent="Cactus" instance=ExtResource("5_3amc3")]
-transform = Transform3D(0.67887765, 0, 0.7342514, 0, 1, 0, -0.7342514, 0, 0.67887765, 1.9940143, 1.2196199, -9)
-
-[node name="Cactus" parent="Cactus/Cactus2" instance=ExtResource("5_3amc3")]
-transform = Transform3D(0.67887765, 0, 0.7342515, 0, 1, 0, -0.7342515, 0, 0.67887765, -5.908251, -0.65070605, -1.6936847)
-
 [node name="Cactus2" parent="." instance=ExtResource("5_3amc3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5707192, 0.38621092, -9.225963)
 
-[node name="TimerUI" parent="." instance=ExtResource("6_c7d2s")]
+[node name="HUD" parent="." instance=ExtResource("6_c7d2s")]
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 2.0
+offset_bottom = 6.0
+
+[node name="cacti" type="Node3D" parent="."]
+
+[node name="Cactus" parent="cacti" instance=ExtResource("5_3amc3")]
+transform = Transform3D(-0.7851224, 0, 0.61934066, 0, 1, 0, -0.61934066, 0, -0.7851224, -4.486726, 1.7885337, -10.551342)
+
+[node name="Cactus2" parent="cacti" instance=ExtResource("5_3amc3")]
+transform = Transform3D(-0.07825029, 0, 0.9969337, 0, 1, 0, -0.9969337, 0, -0.07825029, -3.2605567, 2.4392397, -5.811662)
+
+[node name="Cactus4" parent="cacti" instance=ExtResource("5_3amc3")]
+transform = Transform3D(0.67887765, 0, 0.73425144, 0, 1, 0, -0.73425144, 0, 0.67887765, 1.9940147, 1.2196199, -9.000001)
+
+[node name="Cactus3" parent="cacti" instance=ExtResource("5_3amc3")]
+transform = Transform3D(-0.07825023, 0, 0.9969337, 0, 1, 0, -0.9969337, 0, -0.07825023, -3.2605567, 2.4392397, -16.574007)
+
+[node name="dunes" type="Node3D" parent="."]
+
+[node name="corner" type="Node3D" parent="dunes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.570835, 0, -27.317183)
+
+[node name="dune" type="MeshInstance3D" parent="dunes/corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.895744, -0.80213165, 27.317183)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune2" type="MeshInstance3D" parent="dunes/corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.710262, -0.80213165, 7.894449)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune3" type="MeshInstance3D" parent="dunes/corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.704739, 0.726531, -9.208078)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune4" type="MeshInstance3D" parent="dunes/corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8945923, -1.972827, -11.163538)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune5" type="MeshInstance3D" parent="dunes/corner"]
+transform = Transform3D(0.65095973, 0, -0.7591123, 0, 1, 0, 0.7591123, 0, 0.65095973, -22.244167, -2.1080647, -18.703093)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="corner2" type="Node3D" parent="dunes"]
+transform = Transform3D(0.034480855, 0, 0.9994055, 0, 1, 0, -0.9994055, 0, 0.034480855, -38.110676, 0, -27.317183)
+
+[node name="dune" type="MeshInstance3D" parent="dunes/corner2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.895744, -0.80213165, 27.317183)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune2" type="MeshInstance3D" parent="dunes/corner2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.710262, -0.80213165, 7.894449)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune3" type="MeshInstance3D" parent="dunes/corner2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.704739, 0.726531, -9.208078)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune4" type="MeshInstance3D" parent="dunes/corner2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8945923, -1.972827, -11.163538)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune5" type="MeshInstance3D" parent="dunes/corner2"]
+transform = Transform3D(0.65095973, 0, -0.7591123, 0, 1, 0, 0.7591123, 0, 0.65095973, -22.244167, -2.1080647, -18.703093)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="corner3" type="Node3D" parent="dunes"]
+transform = Transform3D(-0.18388277, 0, -0.9829482, 0, 1, 0, 0.9829482, 0, -0.18388277, 26.460064, 0, 40.04857)
+
+[node name="dune" type="MeshInstance3D" parent="dunes/corner3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.895744, -0.80213165, 27.317183)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune2" type="MeshInstance3D" parent="dunes/corner3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.710262, -0.80213165, 7.894449)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune3" type="MeshInstance3D" parent="dunes/corner3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.704739, 0.726531, -9.208078)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune4" type="MeshInstance3D" parent="dunes/corner3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8945923, -1.972827, -11.163538)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune5" type="MeshInstance3D" parent="dunes/corner3"]
+transform = Transform3D(0.65095973, 0, -0.7591123, 0, 1, 0, 0.7591123, 0, 0.65095973, -22.244167, -2.1080647, -18.703093)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="corner4" type="Node3D" parent="dunes"]
+transform = Transform3D(-0.9998378, 0, 0.018010747, -0.0005098025, 0.99959934, -0.028300868, -0.01800353, -0.02830546, -0.9994372, -44.701145, 0, 36.50165)
+
+[node name="dune" type="MeshInstance3D" parent="dunes/corner4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.895744, -0.80213165, 27.317183)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune2" type="MeshInstance3D" parent="dunes/corner4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.710262, -0.80213165, 7.894449)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune3" type="MeshInstance3D" parent="dunes/corner4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.704739, 0.726531, -9.208078)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune4" type="MeshInstance3D" parent="dunes/corner4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8945923, -1.972827, -11.163538)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")
+
+[node name="dune5" type="MeshInstance3D" parent="dunes/corner4"]
+transform = Transform3D(0.65095973, 0, -0.7591123, 0, 1, 0, 0.7591123, 0, 0.65095973, -22.244167, -2.1080647, -18.703093)
+mesh = SubResource("SphereMesh_y5pss")
+skeleton = NodePath("../..")

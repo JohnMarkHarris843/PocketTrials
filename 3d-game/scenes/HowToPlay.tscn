@@ -6,28 +6,42 @@
 script = ExtResource("1_iayqv")
 
 [node name="MainPanel" type="Panel" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Title" type="Label" parent="MainPanel"]
-layout_mode = 0
-offset_left = 472.0
-offset_top = 40.0
-offset_right = 671.0
-offset_bottom = 89.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -99.0
+offset_top = 46.0
+offset_right = 100.0
+offset_bottom = 95.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 35
 text = "How to Play"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainPanel"]
-layout_mode = 0
-offset_left = 216.0
-offset_top = 104.0
-offset_right = 966.0
-offset_bottom = 504.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -375.0
+offset_top = 110.0
+offset_right = 375.0
+offset_bottom = 566.0
+grow_horizontal = 2
 
 [node name="Instructions" type="Label" parent="MainPanel/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Pocket Trials — How To Play
 
 Objective:
@@ -74,6 +88,7 @@ offset_left = 31.0
 offset_top = 575.0
 offset_right = 131.0
 offset_bottom = 625.0
+size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 22
 text = "Back
 "

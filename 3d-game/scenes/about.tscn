@@ -9,29 +9,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="background" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(28.98301, 16.366138)
 color = Color(0.17, 0.17, 0.17, 1)
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 504.00006
-offset_top = 104.0
-offset_right = 600.00006
-offset_bottom = 127.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 85.0
+offset_right = 46.0
+offset_bottom = 108.0
+grow_horizontal = 2
 scale = Vector2(1.8037322, 2.1750593)
 text = "About Menu"
 
 [node name="Label2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 352.0
-offset_top = 176.0
-offset_right = 854.0
-offset_bottom = 275.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 202.0
+offset_right = 263.0
+offset_bottom = 301.0
+grow_horizontal = 2
 scale = Vector2(1, 1.0051421)
 theme_override_font_sizes/font_size = 22
 text = "Pocket Trials Version 1.0
@@ -39,11 +52,15 @@ Creators: John Mark Harris and Spencer Phillips
 "
 
 [node name="back" type="Button" parent="."]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 560.0
-offset_right = 162.0
-offset_bottom = 591.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -64.0
+offset_right = 154.0
+offset_bottom = -33.0
+grow_vertical = 0
 text = "Back to Menu"
 script = ExtResource("1_hx3vx")
 
