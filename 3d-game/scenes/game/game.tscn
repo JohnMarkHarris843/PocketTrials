@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dn0bi74e43m45"]
+[gd_scene load_steps=29 format=3 uid="uid://dn0bi74e43m45"]
 
 [ext_resource type="PackedScene" uid="uid://b7ub2d6yxd7bk" path="res://scenes/car/red-car.tscn" id="1_7h61r"]
 [ext_resource type="Script" uid="uid://o2natvu64s3n" path="res://scenes/game/game.gd" id="1_kp23o"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c40im4w7a7gen" path="res://scripts/FinishLine.gd" id="8_kp23o"]
 [ext_resource type="Script" uid="uid://blaconah3iim0" path="res://scripts/LapCounter.gd" id="9_5jirj"]
 [ext_resource type="Script" uid="uid://dahvmkydxw5pg" path="res://tools/road_builder.gd" id="10_4j704"]
+[ext_resource type="Script" uid="uid://dug74r48hkf1n" path="res://scripts/FinishTrigger.gd" id="10_otnwt"]
 [ext_resource type="PackedScene" uid="uid://bmk7x7axytenk" path="res://assets/models/finishLine.tscn" id="11_5jirj"]
 [ext_resource type="CylinderMesh" uid="uid://brydkc46gyfhm" path="res://assets/models/simplestTree.tres" id="12_ftsea"]
 [ext_resource type="Script" uid="uid://cjq8ba3flt0vy" path="res://scenes/game/circle_spawner.gd" id="13_ftsea"]
@@ -60,7 +61,7 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="MultiMesh" id="MultiMesh_ftsea"]
+[sub_resource type="MultiMesh" id="MultiMesh_otnwt"]
 transform_format = 1
 use_colors = true
 instance_count = 180
@@ -82,16 +83,19 @@ height = 30.0
 cap_top = false
 cap_bottom = false
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3xj4h"]
+size = Vector3(1, 1.8081055, 6.1260986)
+
 [node name="Race" type="Node3D"]
 script = ExtResource("1_kp23o")
 
-[node name="Car" parent="." instance=ExtResource("1_7h61r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4489846, 0.37531567, 0)
+[node name="Car" parent="." groups=["player"] instance=ExtResource("1_7h61r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4489846, 0.37531567, -8.149497)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.453375, 0.02685833, 0.106681734)
+transform = Transform3D(0.99999964, -0.0006436326, -0.0005206325, 0.00064423354, 0.9999991, 0.0011672783, 0.0005198887, -0.0011676098, 0.99999917, -0.4066011, -0.010254383, 0.07295409)
 material_override = SubResource("StandardMaterial3D_klmno")
 mesh = SubResource("PlaneMesh_c1y5s")
 
@@ -123,9 +127,6 @@ script = ExtResource("9_5jirj")
 visible = false
 script = ExtResource("10_4j704")
 path_node = NodePath("../Track/CenterPath")
-
-[node name="FinishLine" type="Area3D" parent="."]
-script = ExtResource("8_kp23o")
 
 [node name="Track" type="Node3D" parent="."]
 
@@ -328,12 +329,9 @@ transform = Transform3D(-0.9354937, 0, 1.9474653, 0, 2.422399, 0, -2.0206096, 0,
 [node name="Tree25" parent="trees" instance=ExtResource("2_7h61r")]
 transform = Transform3D(-0.9354937, 0, 1.9474653, 0, 2.422399, 0, -2.0206096, 0, -0.90162957, 7.0781612, 2.6596484, -17.622444)
 
-[node name="Node3D" parent="." instance=ExtResource("11_5jirj")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0175076, 1.3275683, -6.106694)
-
 [node name="treeSpawner" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.362952, 0)
-multimesh = SubResource("MultiMesh_ftsea")
+multimesh = SubResource("MultiMesh_otnwt")
 script = ExtResource("13_ftsea")
 mesh = ExtResource("12_ftsea")
 circle_radii = Array[float]([40.0, 40.0, 50.0])
@@ -366,6 +364,10 @@ transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.0525114
 
 [node name="tireStack6" parent="tires/curve" instance=ExtResource("3_0sr1o")]
 transform = Transform3D(0.14050816, 0, 0.052511487, 0, 0.14999999, 0, -0.052511487, 0, 0.14050816, 2.13396, -0.24196371, -1.1096649)
+
+[node name="FinishLineWork" parent="tires/curve/tireStack6" instance=ExtResource("11_5jirj")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0175076, 1.3275683, -6.106694)
+script = ExtResource("8_kp23o")
 
 [node name="tireStack7" parent="tires/curve" instance=ExtResource("3_0sr1o")]
 transform = Transform3D(0.10528192, 0, 0.106844336, 0, 0.14999998, 0, -0.106844336, 0, 0.10528192, 1.8056192, -0.24196371, -1.7038116)
@@ -433,3 +435,16 @@ transform = Transform3D(0.074073054, 0, 0.13043457, 0, 0.14999998, 0, -0.1304345
 [node name="BackgroundRibbon" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.594148, 0)
 mesh = SubResource("CylinderMesh_5v6r0")
+
+[node name="FinishLine" parent="." instance=ExtResource("11_5jirj")]
+transform = Transform3D(-0.025304556, 0, -0.99967974, 0, 1, 0, 0.99967974, 0, -0.025304556, 2.7743244, 1.3543899, -5.8353763)
+
+[node name="FinishTrigger" type="Area3D" parent="FinishLine"]
+transform = Transform3D(0.99895054, 0, 0.045816384, 0, 1, 0, -0.045816384, 0, 0.99895054, -0.46193886, -0.08386445, 0.12605548)
+script = ExtResource("10_otnwt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FinishLine/FinishTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.40405273, 3.0061908)
+shape = SubResource("BoxShape3D_3xj4h")
+
+[connection signal="finished" from="FinishLine/FinishTrigger" to="." method="_on_FinishTrigger_finished"]

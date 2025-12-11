@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dlya88r8iii6r"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 470.0
+offset_top = 216.0
+offset_right = 567.0
+offset_bottom = 239.0
+text = "END SCREEN"

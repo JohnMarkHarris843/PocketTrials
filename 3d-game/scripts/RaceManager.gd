@@ -1,2 +1,12 @@
+# res://scripts/RaceManager.gd
 extends Node
-var selected_car_scene: String = "res://scenes/car/red-car.tscn"
+
+# selected car scene path (example usage)
+var selected_car_scene: String = ""
+
+# last_time recorded at race end in seconds
+var last_time: float = 0.0
+
+# optional helper
+func set_last_time(t: float) -> void:
+	last_time = t

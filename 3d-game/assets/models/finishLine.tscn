@@ -2,11 +2,11 @@
 
 [ext_resource type="Shader" uid="uid://b0wjt3ocuix5m" path="res://assets/models/checkerboardShader.gdshader" id="1_bw6yw"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5bl8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6yw"]
 albedo_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_0vo4y"]
-material = SubResource("StandardMaterial3D_r5bl8")
+material = SubResource("StandardMaterial3D_bw6yw")
 top_radius = 0.1
 bottom_radius = 0.1
 height = 3.5
@@ -23,7 +23,7 @@ lightmap_size_hint = Vector2i(37, 48)
 material = SubResource("ShaderMaterial_h1t51")
 size = Vector3(0.25, 1, 0.93)
 
-[node name="Node3D" type="StaticBody3D"]
+[node name="Node3D" type="Area3D"]
 
 [node name="leftPole" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_0vo4y")
