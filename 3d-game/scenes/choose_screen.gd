@@ -27,3 +27,10 @@ func _on_select_forest_pressed() -> void:
 
 func _on_select_desert_pressed() -> void:
 	worldSelected = "desert"
+	
+func _on_sedan_pressed() -> void:
+	RaceManager.selected_car_scene = "res://scenes/car/red-car.tscn"
+
+
+func _on_van_pressed() -> void:
+	RaceManager.selected_car_scene = "res://scenes/car/greenVan.tscn"

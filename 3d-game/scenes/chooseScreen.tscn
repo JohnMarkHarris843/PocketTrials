@@ -35,6 +35,24 @@ offset_right = 966.0
 offset_bottom = 292.0
 text = "desert"
 
+[node name="sedan" type="Button" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 93.0
+offset_right = 210.0
+offset_bottom = 195.0
+text = "sedan"
+
+[node name="van" type="Button" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 207.0
+offset_right = 220.0
+offset_bottom = 319.0
+text = "van"
+
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="selectForest" to="." method="_on_select_forest_pressed"]
 [connection signal="pressed" from="selectDesert" to="." method="_on_select_desert_pressed"]
+[connection signal="pressed" from="sedan" to="." method="_on_sedan_pressed"]
+[connection signal="pressed" from="van" to="." method="_on_van_pressed"]

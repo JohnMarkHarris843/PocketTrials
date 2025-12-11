@@ -1,2 +1,2 @@
 extends Node
-#TO-DO
+var selected_car_scene: String = "res://scenes/car/red-car.tscn"
