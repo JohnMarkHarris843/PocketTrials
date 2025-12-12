@@ -1,6 +1,16 @@
 extends Node3D
 
+# --- Add this exported property so each scene can set its own track id in the Inspector ---
+@export var track_id: String = "default"
+
 func _ready() -> void:
+	RaceManager.last_track = track_id
+	print("[DEBUG] game.gd track_id (inspector):", track_id, " RaceManager.last_track:", RaceManager.last_track)
+
+	# Set the RaceManager.track id for EndScreen/highscore logic
+	# This uses the exported property so you can change it per-scene in the editor
+	
+
 	_spawn_selected_car()
 
 	# Safely connect HUD boost meter (if HUD and Car exist)

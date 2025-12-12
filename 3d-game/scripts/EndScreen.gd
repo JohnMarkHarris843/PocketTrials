@@ -1,153 +1,185 @@
 # res://scripts/EndScreen.gd
 extends Control
 
-# --- Configure these paths to match your scene if necessary ---
+# --- Adjust these paths to match your scene tree if necessary ---
 var PATH_RECENT_LABEL: String = "MarginContainer/Panel/VBoxContainer/RecentHBox/Label/RecentLabel"
 var PATH_HIGHSCORES_VBOX: String = "MarginContainer/Panel/HighscoresVBox"
 var PATH_QUIT_BUTTON: String = "MarginContainer/Panel/VBoxContainer/ButtonsHBox/QuitButton"
 
-# resolved nodes (populated in _ready)
+# node refs
 var lbl_recent: Label = null
 var vbox_highscores: VBoxContainer = null
 var btn_quit: Button = null
 
+# storage
 const HIGHSCORE_FILE: String = "user://highscores.json"
 const MAX_SCORES: int = 5
+
+# display / tolerance
 const FLOAT_EPS: float = 0.001
+const RECENT_EPS: float = 0.05   # 50 ms tolerance for matching recent time
 const DEBUG: bool = false
 
-var highscores: Array = []
-var last_time: float = 0.0
+# runtime state
+var highscores: Array = []       # in-memory list for current track
+var last_time: float = 0.0       # most recent run's time
 var recent_recorded: bool = false
+var recent_index: int = -1       # index in highscores[] of the newly-recorded run (or -1)
+var track_id: String = "default"
 
 func _ready() -> void:
-	# Resolve nodes safely
+	# resolve nodes safely
 	lbl_recent = get_node_or_null(PATH_RECENT_LABEL) as Label
 	vbox_highscores = get_node_or_null(PATH_HIGHSCORES_VBOX) as VBoxContainer
 	btn_quit = get_node_or_null(PATH_QUIT_BUTTON) as Button
 
-	# Non-fatal warnings for missing nodes
 	if lbl_recent == null:
-		push_warning("EndScreen: RecentLabel not found at: " + PATH_RECENT_LABEL)
+		push_warning("EndScreen: RecentLabel missing: " + PATH_RECENT_LABEL)
 	if vbox_highscores == null:
-		push_warning("EndScreen: HighscoresVBox not found at: " + PATH_HIGHSCORES_VBOX)
+		push_warning("EndScreen: HighscoresVBox missing: " + PATH_HIGHSCORES_VBOX)
 	if btn_quit == null:
-		push_warning("EndScreen: QuitButton not found at: " + PATH_QUIT_BUTTON)
+		push_warning("EndScreen: QuitButton missing: " + PATH_QUIT_BUTTON)
 
-	# Connect quit button safely
 	_safe_connect_button(btn_quit, "_on_quit_pressed")
 
-	# Load highscores and show UI
-	_load_highscores()
+	# -----------------------------
+	# ROBUST CAPTURE: grab race info immediately from RaceManager
+	# -----------------------------
+	var captured_time: float = 0.0
+	var captured_track: String = "default"
 
-	# Capture last_time from RaceManager if available
-	if _capture_racemanager_time():
-		_record_recent_and_display()
-	else:
-		if lbl_recent:
-			lbl_recent.text = "Your time: --:--.---"
-		_display_highscores()
-		show()
+	if typeof(RaceManager) != TYPE_NIL:
+		# capture time
+		if "last_time" in RaceManager:
+			var v = RaceManager.last_time
+			if typeof(v) in [TYPE_INT, TYPE_FLOAT]:
+				captured_time = float(v)
+		elif RaceManager is Object:
+			var maybe_t = RaceManager.get("last_time")
+			if typeof(maybe_t) in [TYPE_INT, TYPE_FLOAT]:
+				captured_time = float(maybe_t)
 
-# Public API — show end screen with a given recent time
-func show_end(recent_time_seconds: float) -> void:
-	last_time = recent_time_seconds
-	_record_recent_and_display()
+		# capture track id
+		if "last_track" in RaceManager:
+			var t = RaceManager.last_track
+			if typeof(t) == TYPE_STRING and t.strip_edges() != "":
+				captured_track = str(t)
+		elif RaceManager is Object:
+			var maybe_tr = RaceManager.get("last_track")
+			if typeof(maybe_tr) == TYPE_STRING and str(maybe_tr).strip_edges() != "":
+				captured_track = str(maybe_tr)
 
-# Internal: record recent run once and display highscores
-func _record_recent_and_display() -> void:
-	if recent_recorded == false and last_time > 0.0:
-		if lbl_recent:
-			lbl_recent.text = "Your time: " + _format_time(last_time)
-		_add_to_highscores(last_time)
+	if DEBUG:
+		print("[DEBUG] EndScreen captured_time=", captured_time, " captured_track=", captured_track)
+
+	# load + record (per-track)
+	_load_highscores_for(captured_track)
+
+	if captured_time > 0.0:
+		_add_to_highscores_for(captured_track, captured_time)
+		# ensure local display values reflect captured run
+		last_time = captured_time
+		track_id = captured_track
 		recent_recorded = true
+	else:
+		track_id = captured_track
+
+	# Always update recent label if we have a last_time
+	if lbl_recent and last_time > 0.0:
+		lbl_recent.text = "Your time: " + _format_time(last_time)
+	elif lbl_recent:
+		lbl_recent.text = "Your time: --:--.---"
+
 	_display_highscores()
 	show()
-	if DEBUG:
-		print("[EndScreen] show_end; last_time=", last_time, " highscores=", highscores)
+
+	# Optional: clear RaceManager values after capture to avoid accidental reuse
+	if typeof(RaceManager) != TYPE_NIL:
+		if "last_time" in RaceManager:
+			RaceManager.last_time = 0.0
+		elif RaceManager is Object:
+			RaceManager.set("last_time", 0.0)
+		if "last_track" in RaceManager:
+			RaceManager.last_track = ""
+		elif RaceManager is Object:
+			RaceManager.set("last_track", "")
 
 # -----------------------
-# Safe connect helper
+# Per-track storage helpers
 # -----------------------
-func _safe_connect_button(btn: Button, method_name: String) -> void:
-	if btn == null:
-		return
-	# Check existing connections via get_signal_connection_list
-	var conns := btn.get_signal_connection_list("pressed")
-	for conn in conns:
-		if conn.has("target") and conn.has("method"):
-			if conn["target"] == self and str(conn["method"]) == method_name:
-				# already connected
-				return
-	# connect now
-	btn.pressed.connect(Callable(self, method_name))
-
-# -----------------------
-# Highscore persistence & merging
-# -----------------------
-func _add_to_highscores(new_time: float) -> void:
-	# reload from disk to merge safely
-	_load_highscores()
-	highscores.append(float(new_time))
-	highscores.sort() # ascending: lower is better
-	if highscores.size() > MAX_SCORES:
-		highscores = highscores.slice(0, MAX_SCORES)
-	_save_highscores()
-	if DEBUG:
-		print("[EndScreen] _add_to_highscores ->", highscores)
-
-func _load_highscores() -> void:
-	highscores.clear()
+func _get_highscores_dict() -> Dictionary:
 	var f: FileAccess = FileAccess.open(HIGHSCORE_FILE, FileAccess.ModeFlags.READ)
 	if not f:
-		if DEBUG:
-			print("[EndScreen] _load_highscores: no file at", ProjectSettings.globalize_path(HIGHSCORE_FILE))
-		return
+		return {}
 	var txt: String = f.get_as_text()
 	f.close()
 	if txt.strip_edges() == "":
-		return
-
+		return {}
 	var parsed = JSON.parse_string(txt)
-	var arr: Array = []
-
 	if typeof(parsed) == TYPE_DICTIONARY:
-		var err = parsed.get("error", null)
-		var res = parsed.get("result", null)
-		if err == OK and typeof(res) == TYPE_ARRAY:
-			arr = res
+		return parsed
 	elif typeof(parsed) == TYPE_ARRAY:
-		# might be [err, result] or plain array
-		if parsed.size() >= 2 and parsed[0] == OK and typeof(parsed[1]) == TYPE_ARRAY:
-			arr = parsed[1]
-		else:
-			arr = parsed
+		# legacy single-array format -> place under "default"
+		return {"default": parsed}
 	else:
-		# fallback: treat as array if possible
-		if typeof(parsed) == TYPE_ARRAY:
-			arr = parsed
+		return {}
 
+func _save_highscores_dict(d: Dictionary) -> void:
+	var f: FileAccess = FileAccess.open(HIGHSCORE_FILE, FileAccess.ModeFlags.WRITE)
+	if not f:
+		push_warning("EndScreen: could not open highscores for write: " + HIGHSCORE_FILE)
+		return
+	f.store_string(JSON.stringify(d))
+	f.close()
+
+func _load_highscores_for(p_track_id: String) -> void:
+	highscores.clear()
+	if p_track_id == "" or p_track_id == null:
+		p_track_id = "default"
+	var dict := _get_highscores_dict()
+	var arr: Array = []
+	if dict.has(p_track_id) and typeof(dict[p_track_id]) == TYPE_ARRAY:
+		arr = dict[p_track_id]
 	for item in arr:
 		if typeof(item) == TYPE_INT or typeof(item) == TYPE_FLOAT:
 			highscores.append(float(item))
-
 	highscores.sort()
 	if highscores.size() > MAX_SCORES:
 		highscores = highscores.slice(0, MAX_SCORES)
 
-	if DEBUG:
-		print("[EndScreen] _load_highscores ->", highscores)
+func _add_to_highscores_for(p_track_id: String, new_time: float) -> void:
+	# Merge / sort / trim and save per-track
+	if p_track_id == "" or p_track_id == null:
+		p_track_id = "default"
+	var dict := _get_highscores_dict()
+	var arr: Array = []
+	if dict.has(p_track_id) and typeof(dict[p_track_id]) == TYPE_ARRAY:
+		arr = dict[p_track_id].duplicate()
+	arr.append(float(new_time))
+	arr.sort()
+	if arr.size() > MAX_SCORES:
+		arr = arr.slice(0, MAX_SCORES)
+	dict[p_track_id] = arr
+	_save_highscores_dict(dict)
 
-func _save_highscores() -> void:
-	var f: FileAccess = FileAccess.open(HIGHSCORE_FILE, FileAccess.ModeFlags.WRITE)
-	if not f:
-		push_warning("EndScreen: failed to open highscores for write: " + HIGHSCORE_FILE)
-		return
-	var out := JSON.stringify(highscores)
-	f.store_string(out)
-	f.close()
+	# update in-memory list for UI
+	highscores.clear()
+	for item in arr:
+		if typeof(item) == TYPE_INT or typeof(item) == TYPE_FLOAT:
+			highscores.append(float(item))
+
+	# find recent index using RECENT_EPS tolerance
+	recent_index = -1
+	for i in range(highscores.size()):
+		if abs(highscores[i] - float(new_time)) <= RECENT_EPS:
+			recent_index = i
+			break
+
+	# ensure last_time for display is set
+	last_time = float(new_time)
+
 	if DEBUG:
-		print("[EndScreen] _save_highscores wrote:", out, "to", ProjectSettings.globalize_path(HIGHSCORE_FILE))
+		print("[DEBUG] highscores for", p_track_id, "=", highscores, " recent_index=", recent_index)
 
 # -----------------------
 # UI rendering
@@ -162,13 +194,12 @@ func _display_highscores() -> void:
 		c.queue_free()
 
 	var header: Label = Label.new()
-	header.text = "Top " + str(MAX_SCORES) + " Times"
+	header.text = "Top " + str(MAX_SCORES) + " Times (" + track_id + ")"
 	header.add_theme_constant_override("font_size", 18)
 	vbox_highscores.add_child(header)
 
 	var recent_in_list: bool = false
-	var i: int = 0
-	while i < highscores.size():
+	for i in range(highscores.size()):
 		var t: float = float(highscores[i])
 		var row: HBoxContainer = HBoxContainer.new()
 
@@ -179,7 +210,10 @@ func _display_highscores() -> void:
 		var time_lbl: Label = Label.new()
 		time_lbl.text = _format_time(t)
 
-		if abs(t - last_time) < FLOAT_EPS:
+		# Prefer index match; fallback to tolerant float compare
+		var is_recent: bool = (i == recent_index) or (abs(t - last_time) <= RECENT_EPS)
+
+		if is_recent:
 			time_lbl.add_theme_constant_override("font_size", 16)
 			var recent_tag: Label = Label.new()
 			recent_tag.text = "  ← NEW"
@@ -193,8 +227,8 @@ func _display_highscores() -> void:
 			row.add_child(time_lbl)
 
 		vbox_highscores.add_child(row)
-		i += 1
 
+	# if recent not in top list, show it below as "Recent"
 	if not recent_in_list and last_time > 0.0:
 		var sep: HSeparator = HSeparator.new()
 		vbox_highscores.add_child(sep)
@@ -211,7 +245,7 @@ func _display_highscores() -> void:
 		vbox_highscores.add_child(recent_row)
 
 # -----------------------
-# Formatting helper
+# Helpers & formatting
 # -----------------------
 func _format_time(secs: float) -> String:
 	var total_ms: int = int(round(secs * 1000.0))
@@ -222,6 +256,16 @@ func _format_time(secs: float) -> String:
 	var s_str: String = "%02d" % s
 	var ms_str: String = "%03d" % ms
 	return m_str + ":" + s_str + "." + ms_str
+
+func _safe_connect_button(btn: Button, method_name: String) -> void:
+	if btn == null:
+		return
+	var conns := btn.get_signal_connection_list("pressed")
+	for conn in conns:
+		if conn.has("target") and conn.has("method"):
+			if conn["target"] == self and str(conn["method"]) == method_name:
+				return
+	btn.pressed.connect(Callable(self, method_name))
 
 # -----------------------
 # Quit -> menu handler
@@ -235,37 +279,10 @@ func _on_quit_pressed() -> void:
 		if ResourceLoader.exists(fallback_scene):
 			get_tree().change_scene_to_file(fallback_scene)
 		else:
-			# If no menu scenes found, as a last resort just quit
 			get_tree().quit()
 
 # -----------------------
-# RaceManager helpers (safe)
+# RaceManager helpers (compat)
 # -----------------------
 func _has_racemanager_autoload() -> bool:
 	return typeof(RaceManager) != TYPE_NIL
-
-func _capture_racemanager_time() -> bool:
-	if not _has_racemanager_autoload():
-		return false
-
-	var val = null
-	if "last_time" in RaceManager:
-		val = RaceManager.last_time
-	elif RaceManager is Object:
-		var maybe = RaceManager.get("last_time")
-		if typeof(maybe) != TYPE_NIL:
-			val = maybe
-
-	if typeof(val) == TYPE_NIL:
-		return false
-
-	if typeof(val) == TYPE_INT or typeof(val) == TYPE_FLOAT:
-		if float(val) > 0.0:
-			last_time = float(val)
-			# clear it to avoid reuse
-			if "last_time" in RaceManager:
-				RaceManager.last_time = 0.0
-			elif RaceManager is Object:
-				RaceManager.set("last_time", 0.0)
-			return true
-	return false

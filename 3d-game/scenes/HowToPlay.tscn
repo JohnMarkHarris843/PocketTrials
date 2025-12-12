@@ -33,10 +33,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -375.0
-offset_top = 110.0
-offset_right = 375.0
-offset_bottom = 566.0
+offset_left = -350.0
+offset_top = 107.0
+offset_right = 400.0
+offset_bottom = 563.0
 grow_horizontal = 2
 
 [node name="Instructions" type="Label" parent="MainPanel/ScrollContainer"]
@@ -45,7 +45,8 @@ size_flags_horizontal = 4
 text = "Pocket Trials — How To Play
 
 Objective:
-Finish the track as fast as possible. Drift to build boost, use boost on straights, and try to beat your best time or your ghost.
+Finish the track as fast as possible. Drift to build boost, use boost on straights, 
+and try to beat your best time.
 
 Basic Controls:
 W – Accelerate
@@ -64,15 +65,8 @@ Boost:
 Press E to use your stored boost.
 Boost is most effective on straightaways and when exiting corners.
 
-Ghost Racer:
-Enable the ghost to race against your best run.
-The ghost replays your fastest time.
-If you set a new best time, the ghost updates.
-Ghost files can be shared between players.
-
 HUD Elements:
 Timer – Shows your current run time
-Lap Counter – Current lap / total laps
 Boost Bar – Your current boost amount
 Best Time – Your fastest time recorded on the track
 

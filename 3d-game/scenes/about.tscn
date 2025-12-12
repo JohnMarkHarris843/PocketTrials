@@ -40,15 +40,27 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -239.0
-offset_top = 202.0
-offset_right = 263.0
-offset_bottom = 301.0
+offset_left = -328.0
+offset_top = 152.0
+offset_right = 375.0
+offset_bottom = 625.0
 grow_horizontal = 2
 scale = Vector2(1, 1.0051421)
 theme_override_font_sizes/font_size = 22
 text = "Pocket Trials Version 1.0
 Creators: John Mark Harris and Spencer Phillips
+Roles of Each Creator:
+Spencer: Forest Scene (graphic design of trees, road, 
+finish line, walls, tires, ground, etc), Cars (graphic design, 
+functionality, animations for both sedan and van), 
+main menu improvments such as video and logo, drifting, 
+and player HUD.
+John Mark Harris: Desert scene (track, graphic design, cactus,
+etc), \"How To Play\" menu, \"About\" menu, Finish line functionality,
+end_screen functionality (with saving and loading of current score 
+and top 5 scores of each map), and script upgrades for game.gd, 
+FinishLine.gd, Racemanager.gd, and main_menu.gd
+
 "
 
 [node name="back" type="Button" parent="."]

@@ -60,7 +60,7 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="MultiMesh" id="MultiMesh_otnwt"]
+[sub_resource type="MultiMesh" id="MultiMesh_ftsea"]
 transform_format = 1
 use_colors = true
 instance_count = 180
@@ -87,6 +87,7 @@ size = Vector3(1, 1.8081055, 6.1260986)
 
 [node name="Race" type="Node3D"]
 script = ExtResource("1_kp23o")
+track_id = "forest"
 
 [node name="Car" parent="." groups=["player"] instance=ExtResource("1_7h61r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03190133, 0.2221533, -8.377579)
@@ -660,7 +661,7 @@ transform = Transform3D(1.6978695, 0, -1.0569953, 0, 2, 0, 1.0569953, 0, 1.69786
 
 [node name="treeSpawner" type="MultiMeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.362952, 0)
-multimesh = SubResource("MultiMesh_otnwt")
+multimesh = SubResource("MultiMesh_ftsea")
 script = ExtResource("13_ftsea")
 mesh = ExtResource("12_ftsea")
 circle_radii = Array[float]([40.0, 40.0, 50.0])
