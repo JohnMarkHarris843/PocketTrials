@@ -149,6 +149,7 @@ func _spawn_tire_mark():
 		mark_right.global_transform.origin = global_transform.origin + global_transform.basis.x * tire_mark_offset_right.x + Vector3(0, tire_mark_offset_right.y, 0) + global_transform.basis.z * tire_mark_offset_right.z
 		mark_right.rotation.y = rotation.y
 
+
 func _update_camera(_turn_direction, is_boosting, delta):
 	# Camera Sway
 	#var target_sway = -turn_direction * sway_strength
